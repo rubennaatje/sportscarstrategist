@@ -1,0 +1,1 @@
+export type Category = 'bronze' | 'silver' | 'gold' | 'platinum';
