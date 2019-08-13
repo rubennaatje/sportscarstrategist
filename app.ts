@@ -73,16 +73,17 @@ var data = [
 
 let car: Car = new Car();
 
-car.drivers.push(new Driver("Timo Glock", "DE"),new Driver("Selina Kerbusch", "BE"),new Driver("Ruben Soerdien", "NL"))
+car.drivers.push(new Driver("Timo Glock", "DE"),new Driver("Selina Kerbusch", "BE"),new Driver("Ruben Soerdien", "NL"));
 
 car.chassis =  { 
   name: "Oreca 07",
   weight: 900,
   downforce: 5,
-  engine: {horsepower: 900, name: "Gibson v6", topspeed: 340, acceleration: 40},
+  brakes: 10,
+  engine: {power: 900, name: "Gibson v6", topspeed: 340, acceleration: 40},
 };
 
-setInterval(function(){car.CarThrottle(100)},100)
+setInterval(function(){car.Throttle(100)},100)
 
 
 

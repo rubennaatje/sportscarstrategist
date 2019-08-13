@@ -24,7 +24,7 @@ export class Car {
         this.EngineOn = false;
     }
 
-    CarThrottle(percentage: number){
+    Throttle(percentage: number){
         if(!this.reachedtopspeed){
             const acceleration = this.carPhysics.CalculateAccelerationByEngine(this.chassis);
             if(this.carPhysics.velocity >= this.chassis.engine.topspeed){
@@ -36,8 +36,9 @@ export class Car {
                 this.reachedtopspeed = false;
             }
         }
-         
+    }
 
-        console.log(this.carPhysics.velocity);
+    Brake(percentage: number){
+        
     }
 }

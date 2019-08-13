@@ -25,7 +25,8 @@ export class CarPhysics {
     CalculateAccelerationByEngine(chassis: IChassis) {
         let msPassed = this.GetTimePassed();
         if(this.velocity < chassis.engine.topspeed && this.velocity > -0.1 && msPassed > 0){
-            this.velocity += (((chassis.engine.acceleration / 1000) )  * msPassed - this.CalculateFriction(chassis));
+            console.log("acc", (((chassis.engine.acceleration / 1000) )  * msPassed ))
+            this.velocity += (((chassis.engine.acceleration / 1000) )  * msPassed );
         }
         
         if(this.velocity > chassis.engine.topspeed){
@@ -39,21 +40,27 @@ export class CarPhysics {
         let msPassed = this.GetTimePassed();
 
         if(this.velocity > 0) {
+            console.log("decc", ((engine.acceleration / 1000))  * msPassed);
             this.velocity -= (((engine.acceleration / 1000))  * msPassed);
         }
 
         if(this.velocity < 0){
             this.velocity =  0;
         }
+        this.lastCheck = new Date();
     }
 
     CalculateFriction(chassis: IChassis){
-        console.log( "aaa" + (chassis.weight + (chassis.downforce * (this.velocity / 1000 )) / 200000));
+        
         return (50 + (chassis.downforce * (this.velocity / 1000 )) / 100000);
     }
     
     GetTimePassed() : number{
         return new Date().getMilliseconds() - this.lastCheck.getMilliseconds();
+    }
+
+    GetAcceleration(engine: IEngine) : number{
+        return engine.acceleration / 2;
     }
 
     
