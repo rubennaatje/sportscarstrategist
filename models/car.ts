@@ -3,6 +3,7 @@ import { IChassis } from "./interfaces/chassis";
 import { CarPhysics } from "./carphysics";
 
 export class Car {
+    entryNumber: number;
     chassis: IChassis;
     drivers: Driver[];
     currentDriverIndex: number;
@@ -14,6 +15,7 @@ export class Car {
     constructor(){
         this.carPhysics =  new CarPhysics();
         this.drivers = [];
+        this.entryNumber = 14;
     }
 
     StartEngine(){
@@ -31,14 +33,14 @@ export class Car {
                 this.reachedtopspeed = true;
             }
         } else {
-            const acceleration = this.carPhysics.Decelerate(this.chassis);
-            if(this.carPhysics.velocity <=1){
-                this.reachedtopspeed = false;
-            }
+            // const acceleration = this.carPhysics.Decelerate(this.chassis);
+            // if(this.carPhysics.velocity <=1){
+            //     this.reachedtopspeed = false;
+            // }
         }
 
         this.carPhysics.Move();
-        console.log(this.carPhysics.getVelocity('km/h'),'km/h' );
+        // console.log(this.carPhysics.getVelocity('km/h'),'km/h' );
     }
     GetLaps(length: number) : number{
         return Math.floor(this.carPhysics.distanceTravelled / length);
