@@ -26,16 +26,28 @@ export class Car {
 
     Throttle(percentage: number){
         if(!this.reachedtopspeed){
-            const acceleration = this.carPhysics.CalculateAccelerationByEngine(this.chassis);
-            if(this.carPhysics.velocity >= this.chassis.engine.topspeed){
+            const acceleration = this.carPhysics.Accelerate(this.chassis);
+            if(this.carPhysics.getVelocity('km/h') >= this.chassis.engine.topspeed){
                 this.reachedtopspeed = true;
             }
         } else {
-            const acceleration = this.carPhysics.CalculateDecelerationByEngine(this.chassis.engine);
-            if(this.carPhysics.velocity <=0){
+            const acceleration = this.carPhysics.Decelerate(this.chassis);
+            if(this.carPhysics.velocity <=1){
                 this.reachedtopspeed = false;
             }
         }
+
+        this.carPhysics.Move();
+        console.log(this.carPhysics.getVelocity('km/h'),'km/h' );
+    }
+    GetLaps(length: number) : number{
+        return Math.floor(this.carPhysics.distanceTravelled / length);
+    }
+    GetDistanceOnLap(length:number){
+        return this.carPhysics.distanceTravelled % length;
+    }
+    GetPercentage(length:number){
+        return Math.round(this.GetDistanceOnLap(length) / length * 100);
     }
 
     Brake(percentage: number){

@@ -3,66 +3,95 @@ import { IChassis } from "./interfaces/chassis";
 
 export class CarPhysics {
     velocity: number;
+    distanceTravelled: number;
     lastCheck: Date;
     
     constructor(){
         this.lastCheck = new Date();
         this.velocity = 0;
-    }
-
-    calculateAcceleration( velocityF:number, msPassed: number) : number {
-        return (velocityF - this.velocity) / msPassed;
+        this.distanceTravelled = 0;
     }
 
     GetNewVelocity(AccelerationMS: number) {
        let msPassed = this.GetTimePassed();
-       this.lastCheck = new Date();
-       let passedSinceLastTime = (AccelerationMS / 1000) * msPassed;
-       this.velocity = this.velocity + passedSinceLastTime
+        let increasedBy = (AccelerationMS / 1000) * msPassed;
+        console.log("!!!!!!!!!!!!", increasedBy);
+        this.velocity = this.velocity + increasedBy;
+
        return this.velocity;
     }
 
-    CalculateAccelerationByEngine(chassis: IChassis) {
-        let msPassed = this.GetTimePassed();
-        if(this.velocity < chassis.engine.topspeed && this.velocity > -0.1 && msPassed > 0){
-            console.log("acc", (((chassis.engine.acceleration / 1000) )  * msPassed ))
-            this.velocity += (((chassis.engine.acceleration / 1000) )  * msPassed );
+    getVelocity(type: string = 'm/s'){
+        switch(type){
+            case 'm/s': return this.velocity;
+            case 'km/s': return this.velocity / 60;
+            case 'km/h': return Math.round((this.velocity / 1000 )* 60);
+            case 'm/h': return this.velocity / 60;
+            case 'mph': return this.velocity;
         }
-        
-        if(this.velocity > chassis.engine.topspeed){
-            this.velocity =  chassis.engine.topspeed;
-        }
-
-        this.lastCheck = new Date();
     }
 
-    CalculateDecelerationByEngine(engine: IEngine) {
+    ConvertValue(num:number, type: string = 'meter'){
+        switch(type){
+            case 'meter': return num;
+            case 'kilometer': return Math.round(num / 1000);
+            case 'km/h': return num / 1000 * 60;
+            case 'm/h': return num / 60;
+            case 'mph': return num;
+        }
+    }
+
+    
+    Accelerate(chassis: IChassis) {
+        // console.clear();
         let msPassed = this.GetTimePassed();
 
-        if(this.velocity > 0) {
-            console.log("decc", ((engine.acceleration / 1000))  * msPassed);
-            this.velocity -= (((engine.acceleration / 1000))  * msPassed);
+        if(this.getVelocity('km/h') < chassis.engine.topspeed && msPassed > 0){
+            this.GetNewVelocity(this.CalculateAcceleration(chassis));
         }
+        
+        if(this.getVelocity('km/h') > chassis.engine.topspeed){
+            this.velocity = chassis.engine.topspeed;
+        }
+    }
 
-        if(this.velocity < 0){
-            this.velocity =  0;
+    Decelerate(chassis: IChassis){
+        let msPassed = this.GetTimePassed();
+        if(this.getVelocity() > 0 && msPassed > 0){
+            this.GetNewVelocity(this.CalculateDeceleration(chassis));
+        } 
+        
+        if (this.getVelocity() <= 0) {
+            this.velocity = 1;
         }
-        this.lastCheck = new Date();
+    }
+
+    Move(){
+        let msPassed = this.GetTimePassed(true);
+        this.distanceTravelled = this.distanceTravelled + (this.getVelocity() / 1000 * msPassed);
     }
 
     CalculateFriction(chassis: IChassis){
         
-        return (50 + (chassis.downforce * (this.velocity / 1000 )) / 100000);
+        return (5000 + (chassis.downforce * (this.velocity / 1000 )) / 100000);
     }
     
-    GetTimePassed() : number{
-        return new Date().getMilliseconds() - this.lastCheck.getMilliseconds();
+    GetTimePassed(isCheck: boolean = false) : number{
+        const dif = new Date().getTime() - this.lastCheck.getTime() ;
+        if(isCheck){
+            this.lastCheck = new Date();
+        }
+        return dif;
     }
 
-    GetAcceleration(engine: IEngine) : number{
-        return engine.acceleration / 2;
+    CalculateAcceleration(chassis: IChassis) : number {
+        let acceleration = (((12.5  + (20 * chassis.engine.acceleration / 100)) / 60) * 1000);
+        return Math.round(acceleration);
     }
 
+    CalculateDeceleration(chassis: IChassis) : number {
+        return -541;
+    }
     
 
 }

@@ -79,11 +79,17 @@ car.chassis =  {
   name: "Oreca 07",
   weight: 900,
   downforce: 5,
+  drag:0,
   brakes: 10,
-  engine: {power: 900, name: "Gibson v6", topspeed: 340, acceleration: 40},
+  engine: {power: 900, name: "Gibson v6", topspeed: 340, acceleration: 100},
 };
 
-setInterval(function(){car.Throttle(100)},100)
+
+setInterval(function(){
+  // console.clear();
+  car.Throttle(100);
+  console.log(car.GetLaps(13626), car.GetDistanceOnLap(13626), car.GetPercentage(13626)+'%');
+},200)
 
 
 
