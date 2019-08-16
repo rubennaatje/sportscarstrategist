@@ -8,7 +8,7 @@ export class Car {
     drivers: Driver[];
     currentDriverIndex: number;
     EngineOn: boolean;
-    private carPhysics: CarPhysics;
+    carPhysics: CarPhysics;
 
     //temp vars
     private reachedtopspeed: boolean;
@@ -33,10 +33,10 @@ export class Car {
                 this.reachedtopspeed = true;
             }
         } else {
-            // const acceleration = this.carPhysics.Decelerate(this.chassis);
-            // if(this.carPhysics.velocity <=1){
-            //     this.reachedtopspeed = false;
-            // }
+            const acceleration = this.carPhysics.Decelerate(this.chassis);
+            if(this.carPhysics.velocity <=1){
+                this.reachedtopspeed = false;
+            }
         }
 
         this.carPhysics.Move();
