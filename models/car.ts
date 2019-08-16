@@ -15,7 +15,7 @@ export class Car {
     constructor(){
         this.carPhysics =  new CarPhysics();
         this.drivers = [];
-        this.entryNumber = 14;
+        this.entryNumber = 99;
     }
 
     StartEngine(){
@@ -48,8 +48,12 @@ export class Car {
     GetDistanceOnLap(length:number){
         return this.carPhysics.distanceTravelled % length;
     }
-    GetPercentage(length:number){
-        return Math.round(this.GetDistanceOnLap(length) / length * 100);
+    GetPercentage(length:number, round: boolean = false){
+        var percentage = this.GetDistanceOnLap(length) / length * 100;
+        if(round){
+            return Math.round(percentage);
+        }
+        return percentage;
     }
 
     Brake(percentage: number){

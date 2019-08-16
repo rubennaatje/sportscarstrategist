@@ -110,7 +110,7 @@ io.on('connection', function (socket){
      }
     }
 
-    socket.emit('event', data);
+    socket.emit('event', {car2:car.chassis.name, laps: car.GetLaps(13626), lapdistance: car.GetDistanceOnLap(13626),percentage :car.GetPercentage(13626)});
   }, 500)
 
 });

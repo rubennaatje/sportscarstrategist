@@ -14,10 +14,8 @@
     "typescript": "^3.5.1"
   },
   "dependencies": {
-    "@types/sylvester": "^0.1.6",
     "express": "^4.17.1",
     "kleur": "^3.0.3",
-    "socket.io": "^2.2.0",
-    "sylvester": "0.0.21"
+    "socket.io": "^2.2.0"
   }
 }
