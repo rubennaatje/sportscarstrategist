@@ -1,4 +1,4 @@
-var blessed = require('blessed')
+var blessed = require('neo-blessed')
   , contrib = require('blessed-contrib')
 
 const io = require('socket.io-client')
@@ -47,7 +47,7 @@ var donut = grid.set(8, 8, 4, 2, contrib.donut,
 
 
 var gauge = grid.set(8, 10, 2, 2, contrib.gauge, {label: 'Storage', percent: [80,20]})
-var gauge_two = grid.set(2, 9, 2, 3, contrib.gauge, {label: 'Deployment Progress', percent: 80})
+// var gauge_two = grid.set(2, 9, 2, 3, contrib.gauge, {label: 'Deployment Progress', percent: 80})
 
 var gauge_percent = 0
 setInterval(function() {
@@ -58,7 +58,7 @@ setInterval(function() {
 
 var gauge_percent_two = 0
 setInterval(function() {
-  gauge_two.setData(gauge_percent_two);
+  // gauge_two.setData(gauge_percent_two);
   gauge_percent_two++;
   if (gauge_percent_two>=100) gauge_percent_two = 0  
 }, 200)
@@ -78,7 +78,7 @@ var bar = grid.set(4, 6, 4.1, 3, contrib.bar,
   var transactionsLine = grid.set(0, 0, 6, 6, contrib.line, 
     { showNthLabel: 5
     , maxY: 100
-    , label: 'Total Transactions'
+    , label: 'Gap(s)'
     , showLegend: true
     , legend: {width: 10}})
 
@@ -87,7 +87,7 @@ var bar = grid.set(4, 6, 4.1, 3, contrib.bar,
       { line: "red"
       , text: "white"
       , baseline: "black"}
-    , label: 'Errors Rate'
+    , label: 'Speed graph'
     , maxY: 400
     , showLegend: true })
 
@@ -117,15 +117,15 @@ function refreshSpark() {
 }
 
 var transactionsData = {
-  title: 'USA',
+  title: 'Gap to rear',
   style: {line: 'red'},
   x: ['00:00', '00:05', '00:10', '00:15', '00:20', '00:30', '00:40', '00:50', '01:00', '01:10', '01:20', '01:30', '01:40', '01:50', '02:00', '02:10', '02:20', '02:30', '02:40', '02:50', '03:00', '03:10', '03:20', '03:30', '03:40', '03:50', '04:00', '04:10', '04:20', '04:30'],
   y: [0, 20, 40, 45, 45, 50, 55, 70, 65, 58, 50, 55, 60, 65, 70, 80, 70, 50, 40, 50, 60, 70, 82, 88, 89, 89, 89, 80, 72, 70]
 }
 
 var transactionsData1 = {
-  title: 'Europe',
-  style: {line: 'yellow'},
+  title: 'Gap to front',
+  style: {line: 'green'},
   x: ['00:00', '00:05', '00:10', '00:15', '00:20', '00:30', '00:40', '00:50', '01:00', '01:10', '01:20', '01:30', '01:40', '01:50', '02:00', '02:10', '02:20', '02:30', '02:40', '02:50', '03:00', '03:10', '03:20', '03:30', '03:40', '03:50', '04:00', '04:10', '04:20', '04:30'],
   y: [0, 5, 5, 10, 10, 15, 20, 30, 25, 30, 30, 20, 20, 30, 30, 20, 15, 15, 19, 25, 30, 25, 25, 20, 25, 30, 35, 35, 30, 30]
 }
@@ -163,11 +163,11 @@ function updateDonut(){
  var color = "green";
  if (pct >= 0.25) color = "cyan";
  if (pct >= 0.5) color = "yellow";
- if (pct >= 0.75) color = "red";  
+ if (pct >= 0.75) color = "red";
  donut.setData([
-   {percent: parseFloat((pct+0.00) % 1).toFixed(2), label: 'storage', 'color': color}
+   {percent: parseFloat((pct+0.00) % 1).toFixed(2), label: 'tirewear', 'color': color}
  ]);
- pct += 0.01;
+ pct += 0.005;
 }
 
 setInterval(function() {   
