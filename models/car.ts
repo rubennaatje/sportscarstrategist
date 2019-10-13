@@ -5,6 +5,7 @@ import { CarPhysics } from "./carphysics";
 export class Car {
     entryNumber: number;
     chassis: IChassis;
+    category: string;
     drivers: Driver[];
     currentDriverIndex: number;
     EngineOn: boolean;
@@ -12,10 +13,10 @@ export class Car {
 
     //temp vars
     private reachedtopspeed: boolean;
-    constructor(){
+    constructor(entryNumber: number){
         this.carPhysics =  new CarPhysics();
         this.drivers = [];
-        this.entryNumber = 99;
+        this.entryNumber = entryNumber;
     }
 
     StartEngine(){
@@ -27,9 +28,10 @@ export class Car {
     }
 
     Throttle(percentage: number){
+        const r: number = Math.random() * 200;
         if(!this.reachedtopspeed){
             const acceleration = this.carPhysics.Accelerate(this.chassis);
-            if(this.carPhysics.getVelocity('km/h') >= this.chassis.engine.topspeed){
+            if(r < 0.1){
                 this.reachedtopspeed = true;
             }
         } else {

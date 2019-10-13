@@ -12,11 +12,10 @@ export class CarPhysics {
         this.distanceTravelled = 0;
     }
 
-    GetNewVelocity(AccelerationMS: number) {
-        console.log("????????????",AccelerationMS);
+    GetNewVelocity(AccelerationMS: number, friction: number = 0) {
        let msPassed = this.GetTimePassed();
-        let increasedBy = (AccelerationMS / 1000) * msPassed;
-        this.velocity = this.velocity + increasedBy;
+        let increasedBy = ((AccelerationMS - friction) / 1000) * msPassed;
+        this.velocity = this.velocity + increasedBy; 
 
        return this.velocity;
     }
@@ -47,7 +46,7 @@ export class CarPhysics {
         let msPassed = this.GetTimePassed();
 
         if(this.getVelocity('km/h') < chassis.engine.topspeed && msPassed > 0){
-            this.GetNewVelocity(this.CalculateAcceleration(chassis));
+            this.GetNewVelocity(this.CalculateAcceleration(chassis), this.CalculateFriction(chassis));
         }
         
         if(this.getVelocity('km/h') > chassis.engine.topspeed){
@@ -68,13 +67,11 @@ export class CarPhysics {
 
     Move(){
         let msPassed = this.GetTimePassed(true);
-        console.log("!!! " + this.velocity,"________________", msPassed,"ms");
         this.distanceTravelled = this.distanceTravelled + (this.getVelocity() / 1000 * msPassed);
     }
 
     CalculateFriction(chassis: IChassis){
-        
-        return (5000 + (chassis.downforce * (this.velocity / 1000 )) / 100000);
+        return ((((chassis.drag / 100 ) + 1) * ((chassis.drag / 100) + 1)) * this.getVelocity() / chassis.engine.topspeed * 20) / 10;
     }
     
     GetTimePassed(isCheck: boolean = false) : number{
@@ -86,7 +83,7 @@ export class CarPhysics {
     }
 
     CalculateAcceleration(chassis: IChassis) : number {
-        let acceleration = (((12.5  + (20 * chassis.engine.acceleration))  / 3.6) / 100);
+        let acceleration = (((12.5  + (20 * chassis.engine.acceleration))  / (chassis.engine.topspeed / 100 )) / 100);
         return Math.round(acceleration);
     }
 

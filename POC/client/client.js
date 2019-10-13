@@ -6,7 +6,7 @@ const socket = io('http://localhost:3000');
 const { red, white, blue, bold } = require('kleur');
 
 var screen = blessed.screen()
-var cardata = {car2:'', laps:  0, lapdistance:  0,percentage : 0, speed:0}
+var carsdata = [];
 //create layout and widgets
 var grid = new contrib.grid({rows: 12, cols: 12, screen: screen})
 
@@ -77,7 +77,7 @@ var bar = grid.set(4, 6, 4.1, 3, contrib.bar,
 
   var transactionsLine = grid.set(0, 0, 6, 6, contrib.line, 
     { showNthLabel: 5
-    , maxY: 100
+    , maxY: 360
     , label: 'Gap(s)'
     , showLegend: true
     , legend: {width: 10}})
@@ -88,7 +88,7 @@ var bar = grid.set(4, 6, 4.1, 3, contrib.bar,
       , text: "white"
       , baseline: "black"}
     , label: 'Speed graph'
-    , maxY: 400
+    , maxY: 420
     , showLegend: true })
 
 
@@ -100,7 +100,7 @@ function fillBar() {
   bar.setData({titles: servers, data: arr})
 }
 fillBar()
-setInterval(fillBar, 2000)
+//setInterval(fillBar, 2000)
     
 var spark1 = [1,2,5,2,1,5,1,2,5,2,1,5,4,4,5,4,1,5,1,2,5,2,1,5,1,2,5,2,1,5,1,2,5,2,1,5]
 var spark2 = [4,4,5,4,1,5,1,2,5,2,1,5,4,4,5,4,1,5,1,2,5,2,1,5,1,2,5,2,1,5,1,2,5,2,1,5]
@@ -109,11 +109,11 @@ refreshSpark()
 setInterval(refreshSpark, 1000)
 
 function refreshSpark() {
-  spark1.shift()
-  spark1.push(Math.random()*5+1)       
-  spark2.shift()
-  spark2.push(Math.random()*5+1)       
-  sparkline.setData(['Server1', 'Server2'], [spark1, spark2])  
+  // spark1.shift()
+  // spark1.push(Math.random()*5+1)       
+  // spark2.shift()
+  // spark2.push(Math.random()*5+1)       
+  // sparkline.setData(['Server1', 'Server2'], [spark1, spark2])  
 }
 
 var transactionsData = {
@@ -135,24 +135,30 @@ var errorsData = {
   x: ['0%','0%','0%','0%','0%','0%','0%','0%','0%','0%','0%','0%'],
   y: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
 }
-
+var errorsData2 = {
+  title: 'Speed car 32',
+  style: {line: 'green'},
+  x: ['0%','0%','0%','0%','0%','0%','0%','0%','0%','0%','0%','0%'],
+  y: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
+}
 var latencyData = {
   x: ['t1', 't2', 't3', 't4'],
   y: [5, 1, 7, 5]
 }
 
 // setLineData([transactionsData, transactionsData1], transactionsLine)
-setLineData([errorsData], errorsLine)
+setLineData([errorsData,errorsData2], transactionsLine)
 // setLineData([latencyData], latencyLine)
 
 setInterval(function() {
-  setLineData([transactionsData, transactionsData1], transactionsLine)
+  //setLineData([transactionsData, transactionsData1], transactionsLine)
   screen.render()
 }, 500)
 
 setInterval(function() {   
-   setLineData([errorsData], errorsLine)
-}, 1500)
+   setLineData([errorsData,errorsData2], errorsLine);
+   setLineData([errorsData,errorsData2], transactionsLine);
+}, 300)
 
 
 
@@ -164,9 +170,9 @@ function updateDonut(){
  if (pct >= 0.25) color = "cyan";
  if (pct >= 0.5) color = "yellow";
  if (pct >= 0.75) color = "red";
- donut.setData([
-   {percent: parseFloat((pct+0.00) % 1).toFixed(2), label: 'tirewear', 'color': color}
- ]);
+//  donut.setData([
+//    {percent: parseFloat((pct+0.00) % 1).toFixed(2), label: 'tirewear', 'color': color}
+//  ]);
  pct += 0.005;
 }
 
@@ -180,7 +186,7 @@ function setLineData(mockData, line) {
    var last = mockData[i].y[mockData[i].y.length-1]
    mockData[i].y.shift()
    var num = Math.max(last + Math.round(Math.random()*10) - 5, 10)    
-   mockData[i].y.push(num)  
+   mockData[i].y.push(num);
  }
  
  line.setData(mockData)
@@ -194,22 +200,36 @@ socket.on('connect', () => {
 });
 socket.on('event', (data) => {
   // console.log(data.percentage);
-  log.log('update' + data.percentage);
-  log.log('update' + data.speed);
-  cardata = data;
+  carsdata = data;
   errorsData.x.slice(0,1)
-  errorsData.y.slice(0,1)
-  errorsData.x.push(Math.floor(data.percentage) + '%');
-  errorsData.y.push(data.speed);
+  errorsData.y.slice(0,2)
+  errorsData.x.push(Math.floor(data[0].percentage) + '%');
+  errorsData2.title = data[0].car2 + " #" + data[0].number;
+  errorsData.y.push(data[0].speed);
+
+  // errorsData2.x.slice(0,1)
+  // errorsData2.y.slice(0,2)
+  // errorsData2.x.push(Math.floor(data[1].percentage) + '%');
+  // errorsData2.title = data[1].car2 + " #" + data[1].number;
+  // errorsData2.y.push(data[1].speed);
+
+  update();
 });
 
 update = function(){
   screen.render();
   // table.ctx.clear(table.width,table.height);
   table.ctx.loadFromSVG();
-  table.ctx.drawCar({carpercentage:cardata.percentage, number: 14, color:'red'}); 
+  for(var i = 0; i < carsdata.length; i++){
+    color = 'red';
+    if(carsdata[i].category === "LMP2"){
+      color = 'blue';
+    } else if(carsdata[i].category === "LMGTEAm"){
+      color = 'yellow';
+    } else if(carsdata[i].category === "LMGTEPro"){
+      color = 'green';
+    }
+    table.ctx.drawCar({carpercentage:carsdata[i].percentage, number: carsdata[i].carnumber, color:color}); 
+  }
+
 }
-// tree.focus()
-update();
-    
-setInterval(update, 100);
