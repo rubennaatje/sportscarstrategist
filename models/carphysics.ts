@@ -71,7 +71,7 @@ export class CarPhysics {
     }
 
     CalculateFriction(chassis: IChassis){
-        return ((((chassis.drag / 100 ) + 1) * ((chassis.drag / 100) + 1)) * this.getVelocity() / chassis.engine.topspeed * 20) / 10;
+        return ((((chassis.drag / 100 ) + 1) * ((chassis.drag / 100) + 1)) * this.getVelocity() / chassis.engine.topspeed * 20) / 2;
     }
     
     GetTimePassed(isCheck: boolean = false) : number{
@@ -88,7 +88,7 @@ export class CarPhysics {
     }
 
     CalculateDeceleration(chassis: IChassis) : number {
-        return -5.41;
+        return -8.41;
     }
     
 

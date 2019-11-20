@@ -28,10 +28,10 @@ export class Car {
     }
 
     Throttle(percentage: number){
-        const r: number = Math.random() * 200;
+        const r: number = Math.floor(this.GetPercentage(13626));
         if(!this.reachedtopspeed){
             const acceleration = this.carPhysics.Accelerate(this.chassis);
-            if(r < 0.1){
+            if(r === 50 || r === 25){
                 this.reachedtopspeed = true;
             }
         } else {
@@ -40,6 +40,7 @@ export class Car {
                 this.reachedtopspeed = false;
             }
         }
+        
 
         this.carPhysics.Move();
         // console.log(this.carPhysics.getVelocity('km/h'),'km/h' );
