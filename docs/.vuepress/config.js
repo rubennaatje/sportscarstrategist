@@ -4,6 +4,7 @@ module.exports = {
     theme: 'simple',
     base: '/sportscarstrategist/',
     repo: 'rubennaatje/sportscarstrategist',
+    docsDir: 'docs',
     themeConfig: {
       author: 'Ruben Soerdien', // will display on the page footer
     //   navbar: { // will display below the title
