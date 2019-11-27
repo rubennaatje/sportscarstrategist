@@ -1,6 +1,6 @@
 ---
 title: How is it going to be build
-date: 2019-11-26
+date: 2019-11-27
 ---
 # Modability 
 This game is 100% moddable in terms of tracks, teams, drivers, etc
@@ -14,7 +14,9 @@ So the game is going to be multiplayer, which is why I decided for node js (or m
 The frontend is written in Javascript as well, in electron even. I know there's lots of hate but it's a genius solution, especially for this game. I use it with nuxt so it's very lightweight, so far it uses only like 100mb so no worries about it using all your ram. 
 
 # Old front-end 
-the game was originally going to run in the terminal! I even had a POC of some graphs showing and a track on screen. At some point I realized it was difficult to do a full application with it and also difficult to distribute as you need specific settings for your terminal client in order to use it. (I used some braille characters to draw lines for my trackmap and graphs). So I looked into packaging it with a terminal client but no luck. Then I looked at running it in a Electron js app with a browser terminal emulator. Worked pretty cool but honestly the performance of the whole terminal thing wasn't too good so I decided to look into using electron with nuxt.
+The game was originally going to run in the terminal! Not because I'm a huge terminal fan but because I was at one point trying to learn unity to build the game I had in mind until i realized that game would never ever be finished as it was too big. So a terminal game was the perfect way of limiting myself.
+
+I even had a POC of some graphs showing and a track on screen. But at some point I realized it was difficult to do a full application with it and also difficult to distribute as you need specific settings for your terminal client in order to use it. (I used some braille characters to draw lines for my trackmap and graphs). So I looked into packaging it with a terminal client but no luck. Then I looked at running it in a Electron js app with a browser terminal emulator. Worked pretty cool but honestly the performance of the whole terminal thing wasn't too good so I decided to look into using electron with nuxt.
 
 And I enjoyed it so much, I had more than I ever had with the terminal app in no time. It's very modular and just nice overall. 
 
