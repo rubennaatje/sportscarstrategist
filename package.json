@@ -1,22 +1,15 @@
 {
-  "name": "docs",
+  "name": "blog",
   "version": "1.0.0",
   "description": "",
-  "directories": {
-    "doc": "docs"
-  },
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "docs:build": "vuepress build docs"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rubennaatje/sportscarstrategist.git"
+    "docs:build": "vuepress build"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rubennaatje/sportscarstrategist/issues"
-  },
-  "homepage": "https://github.com/rubennaatje/sportscarstrategist#readme"
+  "devDependencies": {
+    "vuepress-theme-simple": "^0.7.0"
+  }
 }
