@@ -1,6 +1,6 @@
 ---
 title: Planned features
-date: 2019-11-26
+date: 2019-11-27
 ---
 
 # Basics
@@ -66,6 +66,13 @@ date: 2019-11-26
         * Functions
         * Realistic look
         * (thanks to one amazing open source project!)
+    * driver settings
+         * How much pushing
+                    * How much defending
+                    * How much attacking
+                    * Engine settings
+                    * Take/avoid kerbs 
+                    * etc
     * Strategy editor
         * plan strategy ahead
             * set pitstops
@@ -73,12 +80,6 @@ date: 2019-11-26
                 * tyres
                 * fuel
                 * damage repair
-            * set stints
+            * stint settings
                 * change driver settings per lap
-                    * How much pushing
-                    * How much defending
-                    * How much attacking
-                    * Engine settings
-                    * Take/avoid kerbs 
-                    * etc
-                * (if not set they will take the ones set on the driver screen)
+                    * (if not set they will take the ones set on the driver screen)

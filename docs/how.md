@@ -1,6 +1,6 @@
 ---
 title: How is it going to be build
-date: 2019-11-27
+date: 2019-10-20
 ---
 # Modability 
 This game is 100% moddable in terms of tracks, teams, drivers, etc

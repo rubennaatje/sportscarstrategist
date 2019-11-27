@@ -1,6 +1,6 @@
 ---
 title: Introducing Sportscar Racing Manager
-date: 2019-11-26
+date: 2019-08-14
 ---
 
 # What is this game?
