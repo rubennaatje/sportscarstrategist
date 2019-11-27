@@ -11,6 +11,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Vuepress global
+      run: yarn global add vuepress
     - name: Yarn install
       run: yarn install
     - name: build
