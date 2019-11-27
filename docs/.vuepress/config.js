@@ -2,7 +2,8 @@ module.exports = {
     title: 'Sportscar game',
     description: 'Development blog of my sportscar game',
     theme: 'simple',
-    base: '/sportscar-game-blog/',
+    base: '/sportscarstrategist/',
+    repo: 'rubennaatje/sportscarstrategist',
     themeConfig: {
       author: 'Ruben Soerdien', // will display on the page footer
     //   navbar: { // will display below the title
