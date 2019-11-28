@@ -19,8 +19,8 @@ date: 2019-11-27
         * With the csv reader tool! (> 1.0)
         * by editing files, templates will be released.
     * Open source!
-        * link
-        * link
+        * [Backend](https://github.com/rubennaatje/sportscarstrategist/)
+        * [Frontend](https://github.com/rubennaatje/nuxt-poc/)
 
 # Screens
 
@@ -28,21 +28,24 @@ date: 2019-11-27
 * Telemetry screen
 * Fuel / Tyres screen
 * Pitstop screen
-    * pitstop editor
-    * stint editor
-* trackmap
-* coverage screen
-    * realistic tv hud over the trackmap at first perhaps something different later
+    * Pitstop editor
+    * Stint editor
+* Trackmap
+    * Realistic look
+* Coverage screen
+    * Realistic tv hud over the trackmap at first perhaps something different later
         * trackmap will zoom/focus on battles or other events
+        * Have nice/realistic tv graphics.
     * Text commentary
         * Realistic commentary based on real life things but mostly based on live events. Also moddable. 
         * Team interviews
             - get interviewed and see your answers on the coverage screen / commentary log
-* chat screen
+* Chat screen
     * multiplayer chat
     * Race director decisions are also posted on this screen. 
-* spreadsheet
-* timing screen
+* Spreadsheet
+* Timing screen
+    * Realistic 
 * essentials screen
     * quick links to everything but also showing next pitstop, driver communication, driver settings, etc
 
@@ -81,5 +84,4 @@ date: 2019-11-27
                 * fuel
                 * damage repair
             * stint settings
-                * change driver settings per lap
-                    * (if not set they will take the ones set on the driver screen)
+                * change driver settings per lap (if not set they will take the ones set on the driver screen)

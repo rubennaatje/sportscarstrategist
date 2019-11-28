@@ -6,7 +6,7 @@ date: 2019-08-14
 # What is this game?
 
 This is a multiplayer sportscar race manager where you will guide a racing team through a race, you will mostly be put into the role as a race engineer. 
-Analyzing telemetry giving feedback to the drivers but also a big part is deciding the strategy. Know the rules, go for it. 
+Analyzing telemetry giving feedback to the drivers but also a big part is deciding the strategy.  It is important to know the rules, the drivers and the cars. 
 
 Although this game will work with non endurance races it is focused on endurance racing, you can play it singeplayer in the same way as you do with multiplayer. You can just drop people an ip for them to join (be careful who you are sharing it with)
 
@@ -19,7 +19,7 @@ Even the most recent popular race manager that had an option for endurance didn'
 
 Very basically said anything racing will work but the focus is on endurance sportscar racing. The default rules will be based on that too.
 
-Goal for 1.0 is to have simple rules that sort are fit for a generic sportscar race from the 90s till modern times, minimum driver time. Stretch goal for that is to have different rules that you can set up per race like pitstop times, max stint length, tyre usage, etc. 
+Goal for 1.0 is to have simple rules that sort are fit for a generic sportscar race from the 90s till modern times. Stretch goal for that is to have different rules that you can set up per race like pitstop rules, max stint length, tyre usage, etc. 
 
 So you have to manage a lot of stints, driver swaps, tyres. One important aspect of endurance racing is damage, slight damage costing you a bit per lap, do you come in to get it fixed?
 
