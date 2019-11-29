@@ -1,10 +1,11 @@
 import { Car } from "./models/car";
 import { Driver } from "./models/driver";
 import { CARS } from './tempCars';
+import { Game } from "./game";
 
 var app = require('express')();
 var http = require('http').Server(app);
-var io = require('socket.io')(http) ;
+var io : SocketIO.Server = require('socket.io')(http) ;
 const { red, white, blue, bold } = require('kleur');
 
 //ignore
@@ -54,78 +55,7 @@ for(var entry in entries){
   cars.push(jcar);
 }
 
-
-let car1: Car = new Car(32);
-
-car1.drivers.push(new Driver("Timo Glock", "DE"),new Driver("Selina Kerbusch", "BE"),new Driver("Ruben Soerdien", "NL"));
-
-car1.chassis =  { 
-  name: "Oreca 07",
-  weight: 900,
-  downforce: 5,
-  drag: 70,
-  brakes: 10,
-  engine: {power: 900, name: "Gibson v6", topspeed: 330, acceleration: 100},
-};
-
-let car3: Car = new Car(14);
-
-car3.drivers.push(new Driver("Timo Glock", "DE"),new Driver("Selina Kerbusch", "BE"),new Driver("Ruben Soerdien", "NL"));
-
-car3.chassis =  { 
-  name: "Oreca 07",
-  weight: 900,
-  downforce: 5,
-  drag:80,
-  brakes: 10,
-  engine: {power: 800, name: "Gibson v6", topspeed: 350, acceleration: 90},
-};
-
-function getData(){
-  
-}
-var dataSend = [];
-var count = 0;
-var lastCheck: Date =  new Date();
-setInterval(function(){
-  // console.clear();
-  car1.Throttle(100);
-  car3.Throttle(100);
-  dataSend = [];
-  for(var cara in cars) {
-    var car = cars[cara];
-    if(car != null){
-      car.Throttle(100);
-      dataSend.push({car2:car.chassis.name, category: car.category, laps: car.GetLaps(13626), lapdistance: car.GetDistanceOnLap(13626),percentage :car.GetPercentage(13626), speed: car.carPhysics.getVelocity('km/h'),car:car,carnumber: car.entryNumber});
-    }
-  }
-
-  
-  
-}, 10)
-
-
-io.emit('event', dataSend);
-io.on('connection', function (socket){
-   console.log('connection');
-   
-  let interval = setInterval(function() {
-    lastCheck = new Date();
-    socket.emit('newMessage', dataSend);
-  }, 500)
-  socket.emit('carsEvent', dataSend);
-  socket.emit('newMessage', dataSend);
-  //socket.emit('NewMessage', dataSend);
-  socket.on('disconnect', function () {
-    clearInterval(interval);
-  });
-});
-
-function arraymove(arr, fromIndex, toIndex) {
-  var element = arr[fromIndex];
-  arr.splice(fromIndex, 1);
-  arr.splice(toIndex, 0, element);
-}
+var game: Game = new Game(io, cars);
 
 http.listen(4001, function () {
   console.log('listening on *:3000');

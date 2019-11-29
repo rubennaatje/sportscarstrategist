@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "ts-node app"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +15,7 @@
     "typescript": "^3.5.1"
   },
   "dependencies": {
+    "@types/socket.io": "^2.1.4",
     "express": "^4.17.1",
     "kleur": "^3.0.3",
     "socket.io": "^2.2.0"
