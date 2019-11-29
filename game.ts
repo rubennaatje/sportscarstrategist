@@ -24,7 +24,7 @@ export class Game {
                         socket.emit('newMessage', scope.dataSend);
                     };
                 })(this),
-                20
+                500
             );
 
             socket.on('disconnect', function () {
