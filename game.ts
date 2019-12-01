@@ -23,7 +23,6 @@ export class Game {
     }
 
     private LiveSession(): Session {
-        console.log(this.sessions, this.sessioni);
         return this.sessions[this.sessioni];
     }
 
@@ -52,10 +51,8 @@ export class Game {
             (function (scope) {
                 return function () {
                     if(scope.LiveSession() != null){
-                        scope.dataSend = [];
                         scope.LiveSession().handle();
                         scope.dataSend = scope.LiveSession().GetCars();
-                        console.log(scope.dataSend);
                     }
                 };
             })(this),
