@@ -3,20 +3,14 @@ import { IChassis } from "./interfaces/chassis";
 import { CarPhysics } from "./carphysics";
 
 export class Car {
-    entryNumber: number;
     chassis: IChassis;
-    category: string;
-    drivers: Driver[];
-    currentDriverIndex: number;
     EngineOn: boolean;
     carPhysics: CarPhysics;
 
     //temp vars
     private reachedtopspeed: boolean;
-    constructor(entryNumber: number){
+    constructor(){
         this.carPhysics =  new CarPhysics();
-        this.drivers = [];
-        this.entryNumber = entryNumber;
     }
 
     StartEngine(){
@@ -43,7 +37,6 @@ export class Car {
         
 
         this.carPhysics.Move();
-        // console.log(this.carPhysics.getVelocity('km/h'),'km/h' );
     }
     GetLaps(length: number) : number{
         return Math.floor(this.carPhysics.distanceTravelled / length);

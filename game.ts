@@ -1,17 +1,30 @@
 import { Car } from "./models/car";
+import { Session } from "./models/session";
 
 export class Game {
-   
+
     private io: SocketIO.Server;
     private dataSend: {}[];
     private looper: any;
-    cars: [Car];
+    private sessions: Session[];
+    private sessioni: number;
 
-    constructor(io: SocketIO.Server, cars: [Car]) {
+
+    constructor(io: SocketIO.Server, sessioni: number = 0) {
         this.io = io;
-        this.cars = cars;
         this.listen();
         this.update();
+        this.sessions = [];
+        this.sessioni = sessioni;
+    }
+
+    public AddSession(session: Session){
+        this.sessions.push(session);
+    }
+
+    private LiveSession(): Session {
+        console.log(this.sessions, this.sessioni);
+        return this.sessions[this.sessioni];
     }
 
     private listen(): void {
@@ -21,7 +34,7 @@ export class Game {
             const interval = setInterval(
                 (function (scope) {
                     return function () {
-                        socket.emit('newMessage', scope.dataSend);
+                        socket.emit('updateCars', scope.dataSend);
                     };
                 })(this),
                 500
@@ -33,19 +46,16 @@ export class Game {
         });
     }
 
-    private update(): void {
 
+    private update(): void {
         this.looper = setInterval(
             (function (scope) {
                 return function () {
-
-                    scope.dataSend = [];
-                    for (var c in scope.cars) {
-                        const car = scope.cars[c];
-                        if (car != null) {
-                            car.Throttle(100);
-                            scope.dataSend.push({ car2: car.chassis.name, category: car.category, laps: car.GetLaps(13626), lapdistance: car.GetDistanceOnLap(13626), percentage: car.GetPercentage(13626), speed: car.carPhysics.getVelocity('km/h'), car: car, carnumber: car.entryNumber });
-                        }
+                    if(scope.LiveSession() != null){
+                        scope.dataSend = [];
+                        scope.LiveSession().handle();
+                        scope.dataSend = scope.LiveSession().GetCars();
+                        console.log(scope.dataSend);
                     }
                 };
             })(this),
