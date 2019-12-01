@@ -42,21 +42,17 @@ export class Session {
     GetCars() :{}[] {
         let dataSend: {}[] = [];
 
-        for(var entry of this.cars.GetCars()){
+        this.cars.handle((entry) => {
             if (entry != null) {
                 entry.car.Throttle(100);
                 dataSend.push({ car2: entry.car.chassis.name, category: entry.category, laps: entry.car.GetLaps(13626), lapdistance: entry.car.GetDistanceOnLap(13626), percentage: entry.car.GetPercentage(13626), speed: entry.car.carPhysics.getVelocity('km/h'), car: entry, carnumber: entry.entryNumber });
             }
-        }
+        });
 
         return dataSend;
     }
 
     handle() {
-        this.cars.handle((entry) => {
-            if (entry != null) {
-                entry.car.Throttle(100);
-            }
-        });
+
     }
 }
