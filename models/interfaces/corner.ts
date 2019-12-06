@@ -2,9 +2,8 @@ import { point } from "../types/point";
 
 export interface ICorner {
     name: string;
-    steeringPoint: point;
+    entryPoint: point;
     apexPoint: point;
-    cornerExitPoint: point;
     exitPoint: point; 
     degrees: number;
 }

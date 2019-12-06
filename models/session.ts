@@ -1,5 +1,6 @@
 import { SessionType } from "./enumerations/sessiontype";
 import { CarCollection } from "./carcollection";
+import { Entry } from "./entry";
 
 export class Session {
     private lengthMinutes: number;
@@ -8,6 +9,7 @@ export class Session {
     private sessionType: SessionType;
     private sessionName: string;
     private data: {}[];
+
     cars: CarCollection;
 
     constructor(cars: CarCollection,sessionName: string,lengthMinutes: number, lengthLaps: number, startTime: Date, sessionType: SessionType){
@@ -43,7 +45,6 @@ export class Session {
         let dataSend: {}[] = [];
 
         this.cars.handle((entry) => {
-            entry.car.Throttle(100);
             dataSend.push({ car2: entry.car.chassis.name, category: entry.category, laps: entry.car.GetLaps(13626), lapdistance: entry.car.GetDistanceOnLap(13626), percentage: entry.car.GetPercentage(13626), speed: entry.car.carPhysics.getVelocity('km/h'), car: entry, carnumber: entry.entryNumber });
         });
 
@@ -51,6 +52,9 @@ export class Session {
     }
 
     handle() {
-
+        this.cars.handle((entry: Entry) => {
+            // Q1W - some weird kid on the train that decided to suddenly touch my keyboard
+            entry.handle();
+        });
     }
 }

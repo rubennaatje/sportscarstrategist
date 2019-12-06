@@ -1,6 +1,11 @@
-import { Car } from "./car";
+import { Entry } from "./entry";
 
 export class User {
+    id: string;
     username: string;
-    car: Car;
+    entry: Entry;
+
+    constructor(id: string){
+        this.id = id;
+    }
 }

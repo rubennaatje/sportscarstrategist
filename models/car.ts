@@ -30,20 +30,22 @@ export class Car {
             }
         } else {
             const acceleration = this.carPhysics.Decelerate(this.chassis);
-            if(this.carPhysics.velocity <=1){
+            if(this.carPhysics.velocity <=100 + (this.chassis.brakes + this.chassis.downforce / 2)){
                 this.reachedtopspeed = false;
             }
         }
-        
 
         this.carPhysics.Move();
     }
+
     GetLaps(length: number) : number{
         return Math.floor(this.carPhysics.distanceTravelled / length);
     }
+
     GetDistanceOnLap(length:number){
         return this.carPhysics.distanceTravelled % length;
     }
+
     GetPercentage(length:number, round: boolean = false){
         var percentage = this.GetDistanceOnLap(length) / length * 100;
         if(round){

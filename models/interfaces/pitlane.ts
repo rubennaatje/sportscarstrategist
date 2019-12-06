@@ -3,5 +3,4 @@ export interface IPitlane {
     exitDistance: number;
     length: number;
     maxSpeed: number;
-    boxLocations: [number];
 }
