@@ -7,7 +7,6 @@ import { Entry } from "./models/entry";
 export class Game {
 
     private io: SocketIO.Server;
-    private dataSend: {}[];
     private looper: any;
     private sessions: Session[];
     private sessioni: number;
@@ -48,7 +47,7 @@ export class Game {
             });
 
             // Interval for sending the data about his entry, will only be send to him. 
-            const interval2 = setInterval(()=> {
+            const sendDataInterval = setInterval(()=> {
                 if(this.users.GetUser(socket.id) !== null)
                     socket.emit('teamUpdate', {data: this.users.GetUser(socket.id).entry, telemetry: this.users.GetUser(socket.id).entry.telemetry.speed});
                     console.log({data: this.users.GetUser(socket.id).entry, telemetry: this.users.GetUser(socket.id).entry.telemetry.speed});
@@ -57,21 +56,16 @@ export class Game {
             socket.on('disconnect', () => {
                 console.log('disconnected', socket.id);
                 console.log(this.users.GetUser(socket.id));
-                clearInterval(interval2);
+                clearInterval(sendDataInterval);
                 this.users.RemoveUser(socket.id);
             });
 
         });
         
 
-        const interval = setInterval(
-            (function (scope) {
-                return function () {
-                    scope.io.in('game').emit('updateCars', scope.LiveSession().GetCars());
-                };
-            })(this),
-            500
-        );
+        const interval = setInterval(() => {
+            this.io.in('game').emit('updateCars', this.LiveSession().GetCars());
+        }, 500);
         
         const telemetryInterval = setInterval(() => {
             this.cars.handle((entry: Entry) => {
@@ -79,7 +73,6 @@ export class Game {
                 entry.RunTelemetry();
             });
         }, 1000);
-       
     }
 
 
