@@ -7,6 +7,7 @@ import { CarCollection } from "./models/carcollection";
 import { Session } from "./models/session";
 import { SessionType } from "./models/enumerations/sessiontype";
 import { Track } from "./models/track";
+import { TrackMediator } from "./models/trackmediator";
 
 var app = require('express')();
 var http = require('http').Server(app);
@@ -59,11 +60,6 @@ for (var entry in entries) {
 
   cars.push(jentry);
 }
-var carcollection: CarCollection = new CarCollection(cars);
-var game: Game = new Game(io, carcollection);
-var freepractice: Session = new Session(carcollection, "FP1", 100, 0, new Date("10-10-2019"), SessionType.LapTimeBased);
-game.AddSession(freepractice);
-
 
 track.corners.push({
   name: "Turn 1",
@@ -97,6 +93,19 @@ track.corners.push({
   degrees: 90,
 });
 
+let carcollection: CarCollection = new CarCollection(cars);
+let trackmediator: TrackMediator = new TrackMediator(track, carcollection);
+let game: Game = new Game(io, carcollection, trackmediator);
+let freepractice: Session = new Session(carcollection, "FP1", 100, 0, new Date("10-10-2019"), SessionType.LapTimeBased);
+game.AddSession(freepractice);
+
+
+
+
 http.listen(4001, function () {
+  console.log('listening on *:3000');
+});
+
+http.listen(3000, function () {
   console.log('listening on *:3000');
 });
