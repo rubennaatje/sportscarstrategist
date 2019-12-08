@@ -1,8 +1,8 @@
 import { Session } from "./models/session";
-import { Track } from "./models/track";
 import { UserList } from "./models/userlist";
 import { CarCollection } from "./models/carcollection";
 import { Entry } from "./models/entry";
+import { TrackMediator } from "./models/trackmediator";
 
 export class Game {
 
@@ -10,10 +10,10 @@ export class Game {
     private looper: any;
     private sessions: Session[];
     private sessioni: number;
-    private track: Track;
+    private track: TrackMediator;
     private users: UserList;
     cars: CarCollection;
-    constructor(io: SocketIO.Server, cars: CarCollection,sessioni: number = 0) {
+    constructor(io: SocketIO.Server, cars: CarCollection, track: TrackMediator, sessioni: number = 0) {
         this.io = io;
         this.listen();
         this.update();
@@ -21,6 +21,7 @@ export class Game {
         this.sessioni = sessioni;
         this.users = new UserList();
         this.cars = cars;
+        this.track = track;
     }
 
     public AddSession(session: Session) {
@@ -50,7 +51,8 @@ export class Game {
             const sendDataInterval = setInterval(()=> {
                 if(this.users.GetUser(socket.id) !== null)
                     socket.emit('teamUpdate', {data: this.users.GetUser(socket.id).entry, telemetry: this.users.GetUser(socket.id).entry.telemetry.speed});
-                    console.log({data: this.users.GetUser(socket.id).entry, telemetry: this.users.GetUser(socket.id).entry.telemetry.speed});
+                    //console.log({data: this.users.GetUser(socket.id).entry, telemetry: this.users.GetUser(socket.id).entry.telemetry.speed});
+                    this.track.findCarsClose(this.users.GetUser(socket.id).entry);
             }, 500)
 
             socket.on('disconnect', () => {
@@ -71,7 +73,8 @@ export class Game {
             this.cars.handle((entry: Entry) => {
                 // Q1W - some weird kid on the train that decided to suddenly touch my keyboard
                 entry.RunTelemetry();
-            });
+            }); 
+            this.track.handle();
         }, 1000);
     }
 

@@ -21,7 +21,7 @@ export class CarCollection {
         return this.cars.find((entry) => entry.entryNumber == entryNumber);
     }
 
-    handle(f: (arg0: Entry) => void) {
+    async handle(f: (arg0: Entry) => void) {
         for (var c of this.cars) {
             if (c != null) {
                 f(c);

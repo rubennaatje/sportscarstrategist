@@ -34,8 +34,6 @@ export class Car {
                 this.reachedtopspeed = false;
             }
         }
-
-        this.carPhysics.Move();
     }
 
     GetLaps(length: number) : number{
@@ -56,5 +54,9 @@ export class Car {
 
     Brake(percentage: number){
         
+    }
+
+    Move(){
+        this.carPhysics.Move();
     }
 }
