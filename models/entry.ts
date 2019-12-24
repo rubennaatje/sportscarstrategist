@@ -1,6 +1,7 @@
 import { Driver } from "./driver";
 import { Car } from "./car";
 import { Telemetry } from "./telemetry";
+import { Track } from "./track";
 
 export class Entry {
     category: string;
@@ -9,6 +10,7 @@ export class Entry {
     currentDriverIndex: number;
     car: Car;
     telemetry: Telemetry;
+    track: Track;
     
 
     handle() {
@@ -17,7 +19,7 @@ export class Entry {
 
     RunTelemetry(){
         // in the future this will be a list of ITelemetry items that will be looped through
-        this.telemetry.handle();
+        // this.telemetry.handle();
     }
 
     GetActiveDriver() {
@@ -30,5 +32,21 @@ export class Entry {
         this.entryNumber = entryNumber;
         this.car = car;
         this.telemetry = new Telemetry(car);
+        this.car.entry = this;
+    }
+
+
+    // send data
+    ToJson(){
+        return {
+            EntryNumber: this.entryNumber,
+            category: this.category,
+            drivers: this.drivers,
+            currentDriverIndex: this.currentDriverIndex,
+            car: {
+                chassis: this.car.chassis.name,
+                category: this.car.entry.category,
+            }
+        };
     }
 }

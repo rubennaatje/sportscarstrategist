@@ -2,16 +2,15 @@ import { Car } from "./car";
 
 export class Telemetry {
     private car: Car;
-    speed: {}[]
+    speed: {}[];
+    date: number;
     constructor(car: Car){
         this.car = car;
         this.speed = [];
+        this.date = Date.now();
     }
 
     handle(){
-        if(this.speed[this.car.GetLaps(13626)] == null){
-            this.speed[this.car.GetLaps(13626)] = [];
-        }
-        this.speed[this.car.GetLaps(13626)][this.car.GetDistanceOnLap(13626)] = this.car.carPhysics.getVelocity("km/h");
+        this.speed.push({pos: this.car.GetDistanceOnLap(), time: (Date.now() - this.date) / 1000, val: this.car.carPhysics.getVelocity("km/h")});
     }
 }

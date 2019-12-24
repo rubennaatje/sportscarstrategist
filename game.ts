@@ -39,20 +39,23 @@ export class Game {
             this.io.to(`${socket.id}`).emit('entryAsk', socket.id);
             
             socket.on('entry', (data) => {
+                console.log(data);
                 this.users.AddUserById(socket.id);
                 this.users.GetUser(socket.id).entry = this.cars.GetCarByEntryNumber(data.entryNumber);
                 this.users.GetUser(socket.id).username = data.username;
                 // User can now receive updates
-                socket.join('game');
+                //socket.join('game');
                 socket.join(data.entryNumber);
             });
 
             // Interval for sending the data about his entry, will only be send to him. 
             const sendDataInterval = setInterval(()=> {
-                if(this.users.GetUser(socket.id) !== null)
-                    socket.emit('teamUpdate', {data: this.users.GetUser(socket.id).entry, telemetry: this.users.GetUser(socket.id).entry.telemetry.speed});
-                    //console.log({data: this.users.GetUser(socket.id).entry, telemetry: this.users.GetUser(socket.id).entry.telemetry.speed});
-                    this.track.findCarsClose(this.users.GetUser(socket.id).entry);
+                
+                    if(this.users.GetUser(socket.id) != undefined){
+                        socket.emit('teamUpdate', {data: this.users.GetUser(socket.id).entry.ToJson(), telemetry: this.users.GetUser(socket.id).entry.telemetry.speed});
+                         console.log( this.users.GetUser(socket.id).entry.car.laps);
+                        this.track.findCarsClose(this.users.GetUser(socket.id).entry);
+                    }
             }, 500)
 
             socket.on('disconnect', () => {

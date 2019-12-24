@@ -25,22 +25,22 @@ for (var entry in entries) {
   jentry.drivers.push(new Driver(val.driver, "DE"), new Driver("Selina Kerbusch", "BE"), new Driver("Ruben Soerdien", "NL"));
   jentry.category = val.category;
   var r1: number, r2: number, r3: number, r4: number, r5: number;
-  r1 = (Math.random() * 10);
-  r2 = (Math.random() * 10);
-  r3 = (Math.random() * 10);
-  r4 = (Math.random() * 10);
-  r5 = (Math.random() * 10);
+  r1 = (Math.random() * 10) + 1;
+  r2 = (Math.random() * 10) + 1;
+  r3 = (Math.random() * 30) + 1;
+  r4 = (Math.random() * 10) + 1;
+  r5 = (Math.random() * 30) + 1;
 
   switch (jentry.category) {
     case 'LMP1':
-      r3 = r3 * 1.4;
-      r4 = r4 * 1.4;
-      r5 = r5 * 1.4;
+      r3 = r3 * 2;
+      r4 = r4 * 2;
+      r5 = r5 * 2;
       break;
     case 'LMP2':
-      r3 = r3 * 1.2;
-      r4 = r4 * 1.2;
-      r5 = r5 * 1.2;
+      r3 = r3 * 1.5;
+      r4 = r4 * 1.5;
+      r5 = r5 * 1.5;
       break;
     case 'LMGTEAm':
       r3 = r3 * 0.8;
@@ -55,7 +55,7 @@ for (var entry in entries) {
     downforce: 5,
     drag: 30 + r2,
     brakes: 10 + r3,
-    engine: { power: 900 + r4, name: "Gibson v6", topspeed: 300 + r5, acceleration: 100 + r3 },
+    engine: { power: 900 + r4, name: "Gibson v6", topspeed: 280 + r5, acceleration: 70 + r3 },
   }
 
   cars.push(jentry);
@@ -103,9 +103,5 @@ game.AddSession(freepractice);
 
 
 http.listen(4001, function () {
-  console.log('listening on *:3000');
-});
-
-http.listen(3000, function () {
   console.log('listening on *:3000');
 });

@@ -10,6 +10,10 @@ export class TrackMediator {
     constructor(track: Track, cars: CarCollection) {
         this.track = track;
         this.cars = cars;
+
+        for (const iterator of this.cars.GetCars()) {
+            iterator.track = this.track;
+        }
     }
 
     handle() {
@@ -22,10 +26,10 @@ export class TrackMediator {
         let test = this.cars.GetCars().reduce(function (prev, curr) {
             return (
                 entry != curr &&
-                    curr.car.GetDistanceOnLap(100) - entry.car.GetDistanceOnLap(100) < prev.car.GetDistanceOnLap(100) - entry.car.GetDistanceOnLap(100) ? curr : prev
+                    curr.car.GetDistanceOnLap() - entry.car.GetDistanceOnLap() > prev.car.GetDistanceOnLap() - entry.car.GetDistanceOnLap() ? curr : prev
             );
         });
-        console.log(Math.abs(test.car.GetDistanceOnLap(100) - entry.car.GetDistanceOnLap(100)) + " "+test.entryNumber);
+        console.log(Math.abs(test.car.GetDistanceOnLap() - entry.car.GetDistanceOnLap()) + " "+test.entryNumber);
         return test;
     }
 }
