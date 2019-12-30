@@ -16,7 +16,8 @@ export class Car {
     constructor(){
         this.carPhysics =  new CarPhysics();
         this.laps = [];
-        this.laps.push(new TimedLap(1,this));
+        this.laps.push(new TimedLap(0,this));
+        this.laps[0].start(Date.now());
     }
 
     StartEngine(){
@@ -68,8 +69,10 @@ export class Car {
         
 
         if(laps !== this.GetLaps()){
-            console.log("new lap!", this.GetLaps(), this.GetDistanceOnLap(), this.entry.track.length )
-            this.laps.push(new TimedLap(this.GetLaps(), this))
+            this.laps[laps].finish(Date.now());
+            console.log("new lap!", this.GetLaps(), this.GetDistanceOnLap(), this.entry.track.length );
+            this.laps.push(new TimedLap(this.GetLaps(), this));
+            this.laps[this.GetLaps()].start(Date.now());
         }
 
     }

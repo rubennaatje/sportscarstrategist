@@ -9,7 +9,6 @@ export class Entry {
     entryNumber: (string | number);
     currentDriverIndex: number;
     car: Car;
-    telemetry: Telemetry;
     track: Track;
     
 
@@ -31,7 +30,6 @@ export class Entry {
         this.currentDriverIndex = 0;
         this.entryNumber = entryNumber;
         this.car = car;
-        this.telemetry = new Telemetry(car);
         this.car.entry = this;
     }
 

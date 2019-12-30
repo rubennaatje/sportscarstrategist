@@ -29,7 +29,6 @@ export class TrackMediator {
                     curr.car.GetDistanceOnLap() - entry.car.GetDistanceOnLap() > prev.car.GetDistanceOnLap() - entry.car.GetDistanceOnLap() ? curr : prev
             );
         });
-        console.log(Math.abs(test.car.GetDistanceOnLap() - entry.car.GetDistanceOnLap()) + " "+test.entryNumber);
         return test;
     }
 }

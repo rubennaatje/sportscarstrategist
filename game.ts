@@ -52,8 +52,7 @@ export class Game {
             const sendDataInterval = setInterval(()=> {
                 
                     if(this.users.GetUser(socket.id) != undefined){
-                        socket.emit('teamUpdate', {data: this.users.GetUser(socket.id).entry.ToJson(), telemetry: this.users.GetUser(socket.id).entry.telemetry.speed});
-                         console.log( this.users.GetUser(socket.id).entry.car.laps);
+                        socket.emit('teamUpdate', {data: this.users.GetUser(socket.id).entry.ToJson(), telemetry: this.users.GetUser(socket.id).entry.car.ToJSON()});
                         this.track.findCarsClose(this.users.GetUser(socket.id).entry);
                     }
             }, 500)
@@ -77,21 +76,16 @@ export class Game {
                 // Q1W - some weird kid on the train that decided to suddenly touch my keyboard
                 entry.RunTelemetry();
             }); 
-            this.track.handle();
         }, 1000);
     }
 
 
     private update(): void {
-        this.looper = setInterval(
-            (function (scope) {
-                return function () {
-                    if (scope.LiveSession() != null) {
-                        scope.LiveSession().handle();
-                    }
-                };
-            })(this),
-            20
-        );
+        this.looper  = setInterval(() => {
+            if (this.LiveSession() != null) {
+                this.LiveSession().handle();
+            }
+            this.track.handle();
+        }, 20);
     }
 }
