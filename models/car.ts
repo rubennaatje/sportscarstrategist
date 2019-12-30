@@ -43,15 +43,15 @@ export class Car {
     }
 
     GetLaps() : number{
-        return Math.floor(this.carPhysics.distanceTravelled / this.entry.track.lengthKM * 1000);
+        return Math.floor(this.carPhysics.distanceTravelled / (this.entry.track.length ));
     }
 
     GetDistanceOnLap(){
-        return this.carPhysics.distanceTravelled % this.entry.track.lengthKM * 1000;
+        return this.carPhysics.distanceTravelled % this.entry.track.length;
     }
 
     GetPercentage(round: boolean = false){
-        var percentage = this.GetDistanceOnLap() / (this.entry.track.lengthKM * 1000) * 100;
+        var percentage = this.GetDistanceOnLap() / this.entry.track.length * 100;
         if(round){
             return Math.round(percentage);
         }
@@ -68,7 +68,7 @@ export class Car {
         
 
         if(laps !== this.GetLaps()){
-            console.log("new lap!", this.GetLaps())
+            console.log("new lap!", this.GetLaps(), this.GetDistanceOnLap(), this.entry.track.length )
             this.laps.push(new TimedLap(this.GetLaps(), this))
         }
 
@@ -79,7 +79,8 @@ export class Car {
             lapdistance: this.GetDistanceOnLap(),
             laps: this.GetLaps(),
             percentage: this.GetPercentage(),
-            speed: this.carPhysics.getVelocity('km/h')
+            speed: this.carPhysics.getVelocity('km/h'),
+            currentTelemetry: this.laps[this.GetLaps()].telemetry.speed
         }
     }
 }

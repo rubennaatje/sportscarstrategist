@@ -46,6 +46,7 @@ export class Entry {
             car: {
                 chassis: this.car.chassis.name,
                 category: this.car.entry.category,
+                extra: this.car.ToJSON()
             }
         };
     }

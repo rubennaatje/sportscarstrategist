@@ -12,12 +12,16 @@ export class Track {
     corners: ICorner[];
     gripLevel: number;
     defaultTrackPoints: number[];
-    lengthKM: number;
+    length: number;
 
-    constructor(lengthKM: number) {
-        this.lengthKM = lengthKM;
+    constructor(length: number) {
+        this.length = length;
         this.gripLevel = 60;
         this.corners = [];
+    }
+
+    GetLengthKM(){
+        this.length * 1000;
     }
 
     GetGripLevel() {
