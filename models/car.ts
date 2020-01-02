@@ -16,7 +16,7 @@ export class Car {
     constructor(){
         this.carPhysics =  new CarPhysics();
         this.laps = [];
-        this.laps.push(new TimedLap(0,this));
+        this.laps[0] = new TimedLap(0,this);
         this.laps[0].start(Date.now());
     }
 
@@ -70,7 +70,7 @@ export class Car {
 
         if(laps !== this.GetLaps()){
             this.laps[laps].finish(Date.now());
-            this.laps.push(new TimedLap(this.GetLaps(), this));
+            this.laps[this.GetLaps()] = new TimedLap(this.GetLaps(), this);
             this.laps[this.GetLaps()].start(Date.now());
         }
 
