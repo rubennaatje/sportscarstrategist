@@ -19,6 +19,7 @@ export class Entry {
     RunTelemetry(){
         // in the future this will be a list of ITelemetry items that will be looped through
         // this.telemetry.handle();
+        this.car.laps[this.car.GetLaps()].handle();
     }
 
     GetActiveDriver() {

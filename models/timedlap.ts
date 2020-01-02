@@ -21,7 +21,6 @@ export class TimedLap {
     }
 
     finish(time: number){
-        console.log(time, this.startTimeS, "aaaaa");
         this.laptimeS = time - this.startTimeS;
     }
 

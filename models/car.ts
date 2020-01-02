@@ -70,7 +70,6 @@ export class Car {
 
         if(laps !== this.GetLaps()){
             this.laps[laps].finish(Date.now());
-            console.log("new lap!", this.GetLaps(), this.GetDistanceOnLap(), this.entry.track.length );
             this.laps.push(new TimedLap(this.GetLaps(), this));
             this.laps[this.GetLaps()].start(Date.now());
         }
@@ -84,6 +83,14 @@ export class Car {
             percentage: this.GetPercentage(),
             speed: this.carPhysics.getVelocity('km/h'),
             currentTelemetry: this.laps[this.GetLaps()].telemetry.speed
+        }
+    }
+    
+    GetTelemetry(lap: number = -1){
+        if(lap === -1){
+            return this.laps[this.GetLaps()].telemetry.speed;
+        } else {
+            return this.laps[lap].telemetry.speed;
         }
     }
 }

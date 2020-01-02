@@ -44,7 +44,7 @@ export class Game {
                 this.users.GetUser(socket.id).entry = this.cars.GetCarByEntryNumber(data.entryNumber);
                 this.users.GetUser(socket.id).username = data.username;
                 // User can now receive updates
-                //socket.join('game');
+                socket.join('game');
                 socket.join(data.entryNumber);
             });
 
@@ -69,6 +69,7 @@ export class Game {
 
         const interval = setInterval(() => {
             this.io.in('game').emit('updateCars', this.LiveSession().GetCars());
+            console.log("send");
         }, 500);
         
         const telemetryInterval = setInterval(() => {

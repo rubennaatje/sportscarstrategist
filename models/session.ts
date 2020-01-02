@@ -45,7 +45,7 @@ export class Session {
         let dataSend: {}[] = [];
 
         this.cars.handle((entry) => {
-            dataSend.push({ car2: entry.car.chassis.name, category: entry.category, laps: entry.car.GetLaps(), lapdistance: entry.car.GetDistanceOnLap(), percentage: entry.car.GetPercentage(), speed: entry.car.carPhysics.getVelocity('km/h'), carnumber: entry.entryNumber });
+            dataSend.push({ car2: entry.car.chassis.name, category: entry.category, laps: entry.car.GetLaps(), lapdistance: entry.car.GetDistanceOnLap(), percentage: entry.car.GetPercentage(), speed: entry.car.carPhysics.getVelocity('km/h'), carnumber: entry.entryNumber, realdeal: entry.ToJson()});
         });
 
         return dataSend;
