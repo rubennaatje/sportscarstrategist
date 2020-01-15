@@ -1,6 +1,7 @@
 ---
 title: Introducing Sportscar Racing Manager
 date: 2019-08-14
+author: Ruben Soerdien
 ---
 
 # What is this game?
@@ -14,7 +15,12 @@ Although this game will work with non endurance races it is focused on endurance
 
 Even the most recent popular race manager that had an option for endurance didn't suit my needs. I wanted to feel like an actual race engineer, looking at cool graphs but also having a much more realistic feel to everything. Another thing is that lots of these games don't have the option to fill in a strategy beforehand, my game is a little more laid back where you can set the strategy in the beginning (and change it during the race of course) just to give you that extra bit of relaxedness, drivers aren't stupid and know when to bring in the car regardless or not you press on the button. 
 
+Another big issue I have is that these are all so focussed on the management stuff outside of racing. The last issue I have with those is that none of them have (good) multiplayer support. 
 
+So in short
+- Realism (although perhaps a bit fake realism but at least it'll feel cool)
+- Race management != Team management
+- Multiplayer
 # What exactly are we simulating?
 
 Very basically said anything racing will work but the focus is on endurance sportscar racing. The default rules will be based on that too.
