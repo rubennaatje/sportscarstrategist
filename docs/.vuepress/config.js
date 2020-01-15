@@ -8,8 +8,8 @@ module.exports = {
     themeConfig: {
       author: 'Ruben Soerdien', // will display on the page footer
        navbar: { // will display below the title
-         FEATURES: '/features',
-         INTRODUCTION: '/test',
+         FEATURES: '/sportscarstrategist/features',
+         INTRODUCTION: '/sportscarstrategist/test',
          'ROADMAP': 'https://www.notion.so/sportscargame/7ed4143c06ef470d90ea5daa4023995c?v=3fa328cf74534c9aa43276b8c84a0c52'
        }
     }
