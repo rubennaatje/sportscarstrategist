@@ -82,8 +82,19 @@ export class Car {
             laps: this.GetLaps(),
             percentage: this.GetPercentage(),
             speed: this.carPhysics.getVelocity('km/h'),
-            currentTelemetry: this.laps[this.GetLaps()].telemetry.speed
+            currentTelemetry: this.laps[this.GetLaps()].telemetry.speed,
+            laptimes: this.GetLaptimes()
         }
+    }
+
+    GetLaptimes(){
+        let res = [];
+
+        this.laps.forEach(lap => {
+            res.push(lap.laptimeS);
+        });
+
+        return res;
     }
     
     GetTelemetry(lap: number = -1){
