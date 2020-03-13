@@ -14,7 +14,6 @@ export class Telemetry {
         this.speed.push({pos: this.car.GetDistanceOnLap(), time: (Date.now() - this.date) / 1000, val: this.car.carPhysics.getVelocity("km/h")});
     }
 
-
     ToJSON() {
         return {
             speed: this.speed

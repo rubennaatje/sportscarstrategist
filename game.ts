@@ -69,7 +69,6 @@ export class Game {
 
         const interval = setInterval(() => {
             this.io.in('game').emit('updateCars', this.LiveSession().GetCars());
-            console.log("send");
         }, 500);
         
         const telemetryInterval = setInterval(() => {
