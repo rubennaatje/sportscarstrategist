@@ -1,4 +1,3 @@
-import { Driver } from "./driver";
 import { IChassis } from "./interfaces/chassis";
 import { CarPhysics } from "./carphysics";
 import { Entry } from "./entry";

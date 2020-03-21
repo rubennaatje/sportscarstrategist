@@ -5,6 +5,4 @@ export class PitLane implements IPitlane{
     length: number;
     maxSpeed: number;
     boxLocations: [number];
-
-    
 }
