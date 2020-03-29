@@ -2,6 +2,7 @@ import { Driver } from './driver';
 import { Car } from './car';
 import { Track } from './track';
 import { CarState } from './enumerations/carstate';
+import { TaskList } from './tasklist';
 
 export class Entry {
   category: string;
@@ -11,6 +12,7 @@ export class Entry {
   car: Car;
   track: Track;
   state: CarState;
+  taskList: TaskList;
 
   constructor(entryNumber: string | number, car: Car) {
     this.drivers = [];
@@ -19,6 +21,7 @@ export class Entry {
     this.car = car;
     this.car.entry = this;
     this.state = CarState.GARAGE;
+    this.taskList = new TaskList();
   }
 
   handle() {
@@ -34,6 +37,7 @@ export class Entry {
     }
 
     this.GetActiveDriver().handle(this.car);
+    //this.taskList.getCurrentTask();
   }
 
   RunTelemetry() {

@@ -5,4 +5,5 @@ export enum CarState {
   PITBOX,
   PIT_IN,
   PIT_OUT,
+  ANY,
 }

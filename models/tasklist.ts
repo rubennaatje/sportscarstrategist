@@ -5,11 +5,21 @@ export class TaskList {
   tasks: Task[];
   currentTask: number;
 
-  startTask(CarState: CarState) {
+  constructor() {
+    this.tasks = [];
+  }
+
+  StartTask(CarState: CarState) {
     return this.tasks.map((task, i) => task.starttype === CarState);
   }
 
-  getCurrentTask() {
+  AddTask(task: Task) {
+    this.tasks.push(task);
+  }
+
+  GetCurrentTask(): Task {
     return this.tasks[this.currentTask];
   }
+
+  //EndCurrentTask();
 }
