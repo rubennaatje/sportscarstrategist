@@ -1,8 +1,8 @@
 ---
-title: Sounds
+title: Sound
 date: 2020-02-06
 ---
-# Sounds
+# Sound
 
 I don't know why I'm doing this, as it's not very important at all but maybe, just maybe it's more important than I think it is. 
 
