@@ -1,27 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <head>
-        <script src='http://code.jquery.com/jquery-1.7.2.min.js'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js'></script>
-        <script>
-            var socket = io.connect('http://localhost:4001/');
+  <head>
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script>
+      var socket = io.connect('http://localhost:4001/');
 
-            socket.on('entryAsk', function(data) {
-                $('#messages').append('<li>' + data.message + '</li>');
-                const sendData = {}
-                sendData.username = "rubennaatje"
-                sendData.entryNumber = 8
-                socket.emit('entry', sendData);
-            });
-            socket.on('teamUpdate', function(data) {
-                console.log(data);
-                $('#messages').append('<li>' + data + '</li>');
-            });
-            socket.on('error', function() { console.error(arguments) });
-            socket.on('message', function() { console.log(arguments) });
-        </script>
-    </head>
-    <body>
-        <ul id='messages'></ul>
-    </body>
+      socket.on('entryAsk', function (data) {
+        $('#messages').append('<li>' + JSON.stringify(data) + '</li>');
+        const sendData = {};
+        sendData.username = 'rubennaatje2';
+        sendData.entryNumber = 8;
+        socket.emit('entry', sendData);
+      });
+      socket.on('teamUpdate', function (data) {
+        console.log(data);
+        // $('#messages').append('<li>' + da + '</li>');
+        socket.emit('sendMessage', { message: 'a', visibility: 'all' });
+      });
+      socket.on('error', function () {
+        console.error(arguments);
+      });
+      socket.on('message', function () {
+        console.log(arguments);
+      });
+    </script>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+  </body>
 </html>
