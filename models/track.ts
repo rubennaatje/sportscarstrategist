@@ -1,30 +1,68 @@
-import { ITrackPath } from "./types/trackpath";
-import { ISector } from "./interfaces/sector";
-import { ICorner } from "./interfaces/corner";
-import { PitLane } from "./pitlane";
-
 export class Track {
-    trackPath: ITrackPath;
-    pitlane: PitLane;
-    s1: ISector;
-    s2: ISector;
-    s3: ISector;
-    corners: ICorner[];
-    gripLevel: number;
-    defaultTrackPoints: number[];
-    length: number;
+  length: number;
+  speedtrap: number;
+  starting_line: number;
+  finish_line: number;
+  graphics: TrackGraphics;
+  information: TrackInformation;
+  pitlane: Pitlane;
+  sectors: Sector[];
+  corners: Object[];
+}
 
-    constructor(length: number) {
-        this.length = length;
-        this.gripLevel = 60;
-        this.corners = [];
-    }
+export interface TrackGraphics {
+  track_path: string;
+  pitlane_path: string;
+  S1_path: string;
+  S1_color?: string;
+  S2_path: string;
+  S2_color?: string;
+  S3_path: string;
+  S3_color?: string;
+}
 
-    GetLengthKM(){
-        this.length * 1000;
-    }
+export interface TrackInformation {
+  location: string;
+  lat_lon: { lat: number; lon: number };
+  text: string;
+}
 
-    GetGripLevel() {
-        return this.gripLevel;
-    }
+export interface Pitlane {
+  start: number;
+  end: number;
+  length: number;
+  pitspeed: number;
+  pitspeed_start: number;
+  pitspeed_end: number;
+  pitboxes: Pitbox[];
+}
+
+export interface Pitbox {
+  point: number;
+  entry_number: number;
+  garage_distance: number;
+  num: number;
+}
+
+export interface Sector {
+  name: string;
+  start: number;
+  length: number;
+}
+
+export interface Corner {
+  num: number;
+  name: string;
+  point: number;
+
+  // Temp b4 finished physics.
+  entry_speed: number;
+  apex_speed: number;
+  exit_speed: number;
+  // end temp stuff
+
+  // Multipliers
+  lose_control_risk_multiplier: number;
+  car_wear_multiplier: number;
+  tyre_wear_multiplier: number;
 }

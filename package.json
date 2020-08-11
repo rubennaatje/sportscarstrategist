@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "ts-node app"
+    "run": "ts-node app",
+    "lint": "node_modules/.bin/eslint --ext .ts -f ./node_modules/eslint-friendly-formatter ./"
   },
   "author": "",
   "license": "ISC",
