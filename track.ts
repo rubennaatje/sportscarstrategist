@@ -1,6 +1,6 @@
 import { Track } from './models/track';
 
-export const track: Track = {
+export const track = {
   length: 1234,
   graphics: {
     track_path: '',
@@ -52,15 +52,61 @@ export const track: Track = {
   finish_line: 0,
   corners: [
     {
-      number: 1,
-      name: '',
-      point: 0,
+      num: 1,
+      name: 'La Source',
+      point: 435,
       // temp before physics
       entry_speed: 40,
       apex_speed: 40,
       exit_speed: 40,
-      turning_point: 0,
-      exit_point: 0,
+      turn_in_point: -20,
+      exit_point: 20,
+
+      lose_control_risk_multiplier: 100,
+      car_wear_multiplier: 100,
+      tyre_wear_multiplier: 10,
+    },
+    {
+      num: 2,
+      name: '',
+      point: 754,
+      // temp before physics
+      entry_speed: 40,
+      apex_speed: 40,
+      exit_speed: 40,
+      turn_in_point: -20,
+      exit_point: 20,
+
+      lose_control_risk_multiplier: 100,
+      car_wear_multiplier: 100,
+      tyre_wear_multiplier: 10,
+    },
+    {
+      num: 3,
+      name: 'Eau Rouge',
+      point: 1102,
+      // temp before physics
+      entry_speed: 40,
+      apex_speed: 40,
+      exit_speed: 40,
+      turn_in_point: -20,
+      exit_point: 20,
+
+      lose_control_risk_multiplier: 100,
+      car_wear_multiplier: 100,
+      tyre_wear_multiplier: 10,
+    },
+    {
+      num: 4,
+      name: '',
+      point: 2000,
+      // temp before physics
+      entry_speed: 40,
+      apex_speed: 40,
+      exit_speed: 40,
+      turn_in_point: -20,
+      exit_point: 20,
+
       lose_control_risk_multiplier: 100,
       car_wear_multiplier: 100,
       tyre_wear_multiplier: 10,

@@ -1,3 +1,9 @@
+import { TrackGraphics } from './TrackGraphics';
+import { TrackInformation } from './TrackInformation';
+import { Pitlane } from './Pitlane.1';
+import { Sector } from './Sector';
+import { Corner } from './Corner.1';
+
 export class Track {
   length: number;
   speedtrap: number;
@@ -7,62 +13,28 @@ export class Track {
   information: TrackInformation;
   pitlane: Pitlane;
   sectors: Sector[];
-  corners: Object[];
-}
+  corners: Corner[];
 
-export interface TrackGraphics {
-  track_path: string;
-  pitlane_path: string;
-  S1_path: string;
-  S1_color?: string;
-  S2_path: string;
-  S2_color?: string;
-  S3_path: string;
-  S3_color?: string;
-}
+  constructor(length) {
+    this.length = length;
+  }
 
-export interface TrackInformation {
-  location: string;
-  lat_lon: { lat: number; lon: number };
-  text: string;
-}
+  public GetNextCorner(point: number, last_corner: number = -1) {
+    let result: Corner;
+    if (~last_corner) {
+      let next_corner = last_corner > this.corners.length ? last_corner++ : 0;
+      result = this.corners.find((corner) => corner.point == next_corner);
+      console.log('xd2');
+    }
 
-export interface Pitlane {
-  start: number;
-  end: number;
-  length: number;
-  pitspeed: number;
-  pitspeed_start: number;
-  pitspeed_end: number;
-  pitboxes: Pitbox[];
-}
-
-export interface Pitbox {
-  point: number;
-  entry_number: number;
-  garage_distance: number;
-  num: number;
-}
-
-export interface Sector {
-  name: string;
-  start: number;
-  length: number;
-}
-
-export interface Corner {
-  num: number;
-  name: string;
-  point: number;
-
-  // Temp b4 finished physics.
-  entry_speed: number;
-  apex_speed: number;
-  exit_speed: number;
-  // end temp stuff
-
-  // Multipliers
-  lose_control_risk_multiplier: number;
-  car_wear_multiplier: number;
-  tyre_wear_multiplier: number;
+    if (result == null) {
+      console.log('null');
+      // Otherwise try finding the closest.
+      const goal = point;
+      result = this.corners.reduce((prev, curr) =>
+        curr.point - goal < prev.point - goal ? curr : prev
+      );
+    }
+    return result;
+  }
 }
