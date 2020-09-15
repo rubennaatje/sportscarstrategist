@@ -2,6 +2,8 @@ import { IChassis } from './interfaces/chassis';
 import { CarPhysics } from './carphysics';
 import { Entry } from './entry';
 import { TimedLap } from './timedlap';
+import { Corner } from './Corner.1';
+import { Track } from './track';
 
 export class Car {
   chassis: IChassis;
@@ -9,6 +11,7 @@ export class Car {
   carPhysics: CarPhysics;
   entry: Entry;
   laps: TimedLap[];
+  next_corner: Corner;
 
   //temp vars
   private reachedtopspeed: boolean;
@@ -17,6 +20,17 @@ export class Car {
     this.laps = [];
     this.laps[0] = new TimedLap(0, this);
     this.laps[0].start(Date.now());
+  }
+
+  GetTrack(): Track {
+    return this.entry.track;
+  }
+
+  GetNextCornerOnTrack(): Corner {
+    return this.GetTrack().GetNextCorner(
+      this.GetDistanceOnLap(),
+      this.next_corner?.num || 0
+    );
   }
 
   StartEngine() {
@@ -28,21 +42,7 @@ export class Car {
   }
 
   Throttle(percentage: number) {
-    const r: number = Math.floor(this.GetPercentage());
-    if (!this.reachedtopspeed) {
-      const acceleration = this.carPhysics.Accelerate(this.chassis);
-      if (r === 50 || r === 25) {
-        this.reachedtopspeed = true;
-      }
-    } else {
-      const acceleration = this.carPhysics.Decelerate(this.chassis);
-      if (
-        this.carPhysics.velocity <=
-        100 + (this.chassis.brakes + this.chassis.downforce / 2)
-      ) {
-        this.reachedtopspeed = false;
-      }
-    }
+    const acceleration = this.carPhysics.Accelerate(this.chassis);
   }
 
   GetLaps(): number {
@@ -63,7 +63,9 @@ export class Car {
     return percentage;
   }
 
-  Brake(percentage: number) {}
+  Brake(percentage: number) {
+    this.carPhysics.Decelerate(this.chassis);
+  }
 
   Move() {
     const laps: number = this.GetLaps();
@@ -73,6 +75,15 @@ export class Car {
       this.laps[laps].finish(Date.now());
       this.laps[this.GetLaps()] = new TimedLap(this.GetLaps(), this);
       this.laps[this.GetLaps()].start(Date.now());
+    }
+
+    if (
+      this.next_corner.exit_point < this.GetDistanceOnLap() ||
+      !this.next_corner
+    ) {
+      console.log('Past ' + this.next_corner.name);
+      this.next_corner = this.GetNextCornerOnTrack();
+      console.log('Next is ' + this.next_corner.name);
     }
   }
 

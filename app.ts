@@ -22,7 +22,7 @@ var entries = CARS;
 //xd
 var cars: Entry[] = [];
 
-for (var entry in entries) {
+for (var entry = 0; entry < 1; entry++) {
   var val = entries[entry];
   var jcar: Car = new Car();
   var jentry: Entry = new Entry(val.number, jcar);

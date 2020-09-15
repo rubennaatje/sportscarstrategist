@@ -13,6 +13,7 @@ export class TrackMediator {
 
     for (const iterator of this.cars.GetCars()) {
       iterator.track = this.track;
+      iterator.car.next_corner = iterator.car.GetNextCornerOnTrack();
     }
   }
 
