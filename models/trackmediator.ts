@@ -20,7 +20,7 @@ export class TrackMediator {
   handle() {
     this.cars.handle((entry) => {
       if (entry.entryNumber == '8') {
-        console.log(this.track.GetNextCorner(entry.car.GetDistanceOnLap()));
+        // console.log(this.track.GetNextCorner(entry.car.GetDistanceOnLap()));
       }
       entry.car.Move();
     });

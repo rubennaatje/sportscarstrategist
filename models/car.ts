@@ -27,10 +27,12 @@ export class Car {
   }
 
   GetNextCornerOnTrack(): Corner {
-    return this.GetTrack().GetNextCorner(
+    const nextCorner = this.GetTrack().GetNextCorner(
       this.GetDistanceOnLap(),
       this.next_corner?.num || 0
     );
+    console.log(nextCorner);
+    return nextCorner;
   }
 
   StartEngine() {
@@ -73,17 +75,23 @@ export class Car {
 
     if (laps !== this.GetLaps()) {
       this.laps[laps].finish(Date.now());
+      console.log(this.laps[laps]);
       this.laps[this.GetLaps()] = new TimedLap(this.GetLaps(), this);
       this.laps[this.GetLaps()].start(Date.now());
     }
 
     if (
-      this.next_corner.exit_point < this.GetDistanceOnLap() ||
-      !this.next_corner
+      this.next_corner.exit_point + this.next_corner.point <
+      this.GetDistanceOnLap()
     ) {
       console.log('Past ' + this.next_corner.name);
       this.next_corner = this.GetNextCornerOnTrack();
-      console.log('Next is ' + this.next_corner.name);
+      console.log(
+        'Next is ' +
+          this.next_corner.name +
+          ' ' +
+          (this.next_corner.exit_point < this.GetDistanceOnLap())
+      );
     }
   }
 

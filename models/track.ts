@@ -28,12 +28,21 @@ export class Track {
 
     if (result == null) {
       // Otherwise try finding the closest.
+      console.log('here');
       const goal = point;
+      console.log(goal);
       result = this.corners.reduce((prev, curr) =>
-        curr.point - goal > 0 && curr.point - goal < prev.point - goal
+        (prev != curr &&
+          curr.point - goal > 0 &&
+          curr.point - goal < prev.point - goal) ||
+        prev.point - goal < 0
           ? curr
           : prev
       );
+
+      if (result.point < goal && result.last_corner) {
+        result = this.corners[0];
+      }
     }
     return result;
   }

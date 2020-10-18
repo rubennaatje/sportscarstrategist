@@ -15,4 +15,5 @@ export interface Corner {
   lose_control_risk_multiplier: number;
   car_wear_multiplier: number;
   tyre_wear_multiplier: number;
+  last_corner?: boolean;
 }

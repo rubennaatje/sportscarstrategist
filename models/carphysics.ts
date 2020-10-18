@@ -104,13 +104,13 @@ export class CarPhysics {
 
   CalculateAcceleration(chassis: IChassis): number {
     let acceleration =
-      (12.5 + 20 * chassis.engine.acceleration) /
+      (12.5 + 30 * chassis.engine.acceleration) /
       (chassis.engine.topspeed / 100) /
       100;
     return Math.round(acceleration);
   }
 
   CalculateDeceleration(chassis: IChassis): number {
-    return -8.41;
+    return -12.41;
   }
 }
