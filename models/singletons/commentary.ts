@@ -2,14 +2,16 @@
  * The Singleton class defines the `getInstance` method that lets clients access
  * the unique singleton instance.
  */
-class Commentary {
+export class Commentary {
   private static instance: Commentary;
   strings: string[];
   /**
    * The Singleton's constructor should always be private to prevent direct
    * construction calls with the `new` operator.
    */
-  private constructor() {}
+  private constructor() {
+    this.strings = [];
+  }
 
   /**
    * The static method that controls the access to the singleton instance.
@@ -31,5 +33,6 @@ class Commentary {
    */
   public AddEvent(test: string) {
     this.strings.push(test);
+    console.log(test);
   }
 }

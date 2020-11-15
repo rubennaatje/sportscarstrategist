@@ -28,9 +28,7 @@ export class Track {
 
     if (result == null) {
       // Otherwise try finding the closest.
-      console.log('here');
       const goal = point;
-      console.log(goal);
       result = this.corners.reduce((prev, curr) =>
         (prev != curr &&
           curr.point - goal > 0 &&

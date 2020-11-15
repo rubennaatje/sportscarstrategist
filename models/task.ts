@@ -41,8 +41,11 @@ export class Task {
    */
   public Handle(time: number) {
     this.doneTime += time;
-    if (this.doneTime >= length) {
+    if (this.doneTime >= this.length) {
       this.finished = true;
+      this.endTask.Handle();
+      return false;
     }
+    return true;
   }
 }

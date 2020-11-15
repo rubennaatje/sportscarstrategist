@@ -31,7 +31,6 @@ export class Car {
       this.GetDistanceOnLap(),
       this.next_corner?.num || 0
     );
-    console.log(nextCorner);
     return nextCorner;
   }
 
@@ -84,14 +83,7 @@ export class Car {
       this.next_corner.exit_point + this.next_corner.point <
       this.GetDistanceOnLap()
     ) {
-      console.log('Past ' + this.next_corner.name);
       this.next_corner = this.GetNextCornerOnTrack();
-      console.log(
-        'Next is ' +
-          this.next_corner.name +
-          ' ' +
-          (this.next_corner.exit_point < this.GetDistanceOnLap())
-      );
     }
   }
 

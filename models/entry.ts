@@ -3,6 +3,9 @@ import { Car } from './car';
 import { Track } from './track';
 import { CarState } from './enumerations/carstate';
 import { TaskList } from './tasklist';
+import { Task } from './task';
+import { GarageOut } from './end-tasks/end-garage-pitbox';
+import { PitboxOut } from './end-tasks/pitbox-pitlane';
 
 export class Entry {
   category: string;
@@ -31,13 +34,50 @@ export class Entry {
       case CarState.OFF_TRACK:
         break;
       case CarState.ON_TRACK:
+        this.GetActiveDriver().handle(this.car);
         break;
       case CarState.PITBOX:
         break;
+      case CarState.PIT_OUT:
+        this.GetActiveDriver().handle(this.car);
+        this.state = CarState.ON_TRACK;
+        break;
     }
 
-    this.GetActiveDriver().handle(this.car);
-    //this.taskList.getCurrentTask();
+    const res = this.taskList.HandleCurrentTask();
+    if (!res && this.taskList.tasks.length > 0) {
+      this.taskList.StartTask(this.state);
+      if (this.entryNumber == 7) {
+        console.log('start task!', this.taskList.GetCurrentTask(), this.state);
+      }
+    }
+  }
+
+  getout() {
+    this.taskList.AddTask(
+      new Task(
+        'getting out of garage',
+        1000,
+        100,
+        CarState.GARAGE,
+        1,
+        40,
+        true,
+        new GarageOut(this)
+      )
+    );
+    this.taskList.AddTask(
+      new Task(
+        'PIT OUT',
+        100,
+        100,
+        CarState.PITBOX,
+        1,
+        40,
+        true,
+        new PitboxOut(this)
+      )
+    );
   }
 
   RunTelemetry() {

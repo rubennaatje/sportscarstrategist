@@ -36,7 +36,6 @@ export class Driver {
       car.next_corner.turn_in_point + car.next_corner.point - 100 <
       car.GetDistanceOnLap()
     ) {
-      console.log(`coming close to ${car.next_corner.name}!`);
       if (car.next_corner.entry_speed < car.carPhysics.getVelocity('km/h')) {
         car.Brake(50);
         return;

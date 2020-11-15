@@ -52,6 +52,7 @@ export class Game {
           data.entryNumber
         );
         this.users.GetUser(socket.id).username = data.username;
+        this.users.GetUser(socket.id).entry.getout();
         // User can now receive updates
         socket.join('game');
         socket.join(data.entryNumber);
@@ -65,6 +66,8 @@ export class Game {
             data: user.entry.ToJson(),
             telemetry: user.entry.car.ToJSON(),
           });
+          console.timeEnd('teamUpdate');
+          console.time('teamUpdate');
           this.track.findCarsClose(this.users.GetUser(socket.id).entry);
         }
       }, 500);
@@ -92,6 +95,8 @@ export class Game {
     });
 
     const interval = setInterval(() => {
+      console.timeEnd('updateCars');
+      console.time('updateCars');
       this.io.in('game').emit('updateCars', this.LiveSession().GetCars());
     }, 500);
 
