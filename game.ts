@@ -4,6 +4,8 @@ import { CarCollection } from './models/carcollection';
 import { Entry } from './models/entry';
 import { TrackMediator } from './models/trackmediator';
 import { Chat } from './models/chat/chat';
+import * as kleur from 'kleur';
+import { CarState } from './models/enumerations/carstate';
 
 export class Game {
   private io: SocketIO.Server;
@@ -66,11 +68,21 @@ export class Game {
             data: user.entry.ToJson(),
             telemetry: user.entry.car.ToJSON(),
           });
-          console.timeEnd('teamUpdate');
-          console.time('teamUpdate');
+          console.log(
+            kleur.bgYellow(
+              kleur.black(
+                this.json_filesize({
+                  data: user.entry.ToJson(),
+                  telemetry: user.entry.car.ToJSON(),
+                })
+              )
+            )
+          );
+          console.timeEnd(kleur.bgBlue('teamUpdate'));
+          console.time(kleur.bgBlue('teamUpdate'));
           this.track.findCarsClose(this.users.GetUser(socket.id).entry);
         }
-      }, 500);
+      }, 250);
 
       socket.on('sendMessage', (message) => {
         console.log(message);
@@ -95,17 +107,21 @@ export class Game {
     });
 
     const interval = setInterval(() => {
-      console.timeEnd('updateCars');
-      console.time('updateCars');
-      this.io.in('game').emit('updateCars', this.LiveSession().GetCars());
+      console.timeEnd(kleur.bgRed('updateCars'));
+      console.time(kleur.bgRed('updateCars'));
+      const dataToSend = this.LiveSession().GetCars();
+      console.log(kleur.bgGreen(this.json_filesize(dataToSend)));
+      this.io.in('game').emit('updateCars', dataToSend);
     }, 500);
 
     const telemetryInterval = setInterval(() => {
       this.cars.handle((entry: Entry) => {
         // Q1W - some weird kid on the train that decided to suddenly touch my keyboard
-        entry.RunTelemetry();
+        if (entry.state === CarState.ON_TRACK) {
+          entry.RunTelemetry();
+        }
       });
-    }, 1000);
+    }, 250);
   }
 
   private update(): void {
@@ -114,6 +130,13 @@ export class Game {
         this.LiveSession().handle();
       }
       this.track.handle();
-    }, 20);
+      console.timeEnd(kleur.bgWhite(' '));
+      console.time(kleur.bgWhite(' '));
+    }, 50);
+  }
+
+  private json_filesize(value) {
+    // returns object size in bytes
+    return JSON.stringify(value).length / 1024 / 1024;
   }
 }

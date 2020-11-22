@@ -12,6 +12,7 @@ export class Car {
   entry: Entry;
   laps: TimedLap[];
   next_corner: Corner;
+  lapIndex: number;
 
   //temp vars
   private reachedtopspeed: boolean;
@@ -20,6 +21,7 @@ export class Car {
     this.laps = [];
     this.laps[0] = new TimedLap(0, this);
     this.laps[0].start(Date.now());
+    this.lapIndex = 0;
   }
 
   GetTrack(): Track {
@@ -47,13 +49,22 @@ export class Car {
   }
 
   GetLaps(): number {
-    return Math.floor(
-      this.carPhysics.distanceTravelled / this.entry.track.length
-    );
+    return this.lapIndex;
+  }
+
+  isNextLap(): number {
+    if (
+      Math.floor(
+        this.carPhysics.distanceTravelledOnLap / this.entry.track.length
+      ) > 0
+    ) {
+      return this.carPhysics.distanceTravelledOnLap % this.entry.track.length;
+    }
+    return -1;
   }
 
   GetDistanceOnLap() {
-    return this.carPhysics.distanceTravelled % this.entry.track.length;
+    return this.carPhysics.distanceTravelledOnLap;
   }
 
   GetPercentage(round: boolean = false) {
@@ -71,12 +82,16 @@ export class Car {
   Move() {
     const laps: number = this.GetLaps();
     this.carPhysics.Move();
-
-    if (laps !== this.GetLaps()) {
+    const isNextLap = this.isNextLap();
+    if (this.entry.entryNumber === 7) {
+      console.log(isNextLap);
+    }
+    if (isNextLap !== -1) {
       this.laps[laps].finish(Date.now());
       console.log(this.laps[laps]);
       this.laps[this.GetLaps()] = new TimedLap(this.GetLaps(), this);
       this.laps[this.GetLaps()].start(Date.now());
+      this.carPhysics.distanceTravelledOnLap = isNextLap;
     }
 
     if (
