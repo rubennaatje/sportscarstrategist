@@ -54,7 +54,6 @@ export class Game {
           data.entryNumber
         );
         this.users.GetUser(socket.id).username = data.username;
-        this.users.GetUser(socket.id).entry.getout();
         // User can now receive updates
         socket.join('game');
         socket.join(data.entryNumber);
@@ -80,12 +79,19 @@ export class Game {
           );
           console.timeEnd(kleur.bgBlue('teamUpdate'));
           console.time(kleur.bgBlue('teamUpdate'));
-          this.track.findCarsClose(this.users.GetUser(socket.id).entry);
+
+          const test = this.track.findCarsClose(
+            this.users.GetUser(socket.id).entry
+          );
+          console.log(
+            test.car.GetDistanceOnLap() - user.entry.car.GetDistanceOnLap()
+          );
         }
       }, 250);
 
       socket.on('sendMessage', (message) => {
         console.log(message);
+        this.cars.GetCarByEntryNumber(message.message).getout();
         this.io
           .in('game')
           .emit(
@@ -96,6 +102,12 @@ export class Game {
               this.users.GetUser(socket.id)
             )
           );
+      });
+
+      socket.on('carOrder', (message) => {
+        if (message.order === 'getout') {
+          this.users.GetUser(socket.id).entry.getout();
+        }
       });
 
       socket.on('disconnect', () => {

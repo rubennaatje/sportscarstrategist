@@ -4,9 +4,11 @@ import { CarState } from './enumerations/carstate';
 export class TaskList {
   tasks: Task[];
   currentTask: number | undefined;
+  lastCheck: Date;
 
   constructor() {
     this.tasks = [];
+    this.lastCheck = new Date();
   }
 
   StartTask(carState: CarState) {
@@ -44,6 +46,14 @@ export class TaskList {
       return false;
     }
 
-    return currentTask?.Handle(1);
+    return currentTask?.Handle(this.GetTimePassed());
+  }
+
+  GetTimePassed(isCheck: boolean = false): number {
+    const dif = new Date().getTime() - this.lastCheck.getTime();
+    if (isCheck) {
+      this.lastCheck = new Date();
+    }
+    return dif;
   }
 }
