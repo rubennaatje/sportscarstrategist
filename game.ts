@@ -91,7 +91,7 @@ export class Game {
 
       socket.on('sendMessage', (message) => {
         console.log(message);
-        this.cars.GetCarByEntryNumber(message.message).getout();
+        this.cars.GetCarByEntryNumber(message.message)?.getout();
         this.io
           .in('game')
           .emit(
