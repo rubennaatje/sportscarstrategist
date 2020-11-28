@@ -44,4 +44,19 @@ export class Track {
     }
     return result;
   }
+
+  staticJson() {
+    return {
+      length: this.length,
+      points: {
+        speedtrap: this.speedtrap,
+        starting_line: this.starting_line,
+        finish_line: this.finish_line,
+      },
+      pitlane: this.pitlane,
+      sectors: this.sectors,
+      corners: this.corners,
+      information: this.information,
+    };
+  }
 }

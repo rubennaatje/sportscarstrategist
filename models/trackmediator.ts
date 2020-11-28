@@ -3,6 +3,7 @@ import { CarCollection } from './carcollection';
 import { Car } from './car';
 import { Entry } from './entry';
 import { CarState } from './enumerations/carstate';
+import kleur = require('kleur');
 
 export class TrackMediator {
   track: Track;
@@ -21,41 +22,65 @@ export class TrackMediator {
   handle() {
     this.cars.handle((entry) => {
       entry.car.Move();
-      // entry.car.GetDistanceOnLap() - this.findCarsClose(entry).car.GetDistanceOnLap();
 
-      if (entry.state === CarState.ON_TRACK && entry.entryNumber == '7') {
+      if (entry.state === CarState.ON_TRACK) {
         const carInFront = this.findCarsClose(entry);
+        if (carInFront) {
+          const distanceToCarInFront =
+            carInFront.car.GetDistanceOnLap() - entry.car.GetDistanceOnLap();
 
-        const distanceToCarInFront =
-          carInFront.car.GetDistanceOnLap() - entry.car.GetDistanceOnLap();
+          if (distanceToCarInFront < 100) {
+          }
 
-        if (
-          distanceToCarInFront < 100 &&
-          entry.car.GetNextCornerOnTrack().turn_in_point - 100 >
-            entry.car.GetDistanceOnLap()
-        ) {
-          if (distanceToCarInFront < 10) {
-            console.log('really close into a corner!!');
+          if (
+            distanceToCarInFront < 100 &&
+            entry.car.next_corner.point +
+              entry.car.next_corner.turn_in_point -
+              100 -
+              entry.car.GetDistanceOnLap() >
+              0
+          ) {
+            if (distanceToCarInFront > 10) {
+            } else {
+            }
+          } else if (
+            distanceToCarInFront > 1 &&
+            distanceToCarInFront < 5 &&
+            entry.car.next_corner.point +
+              entry.car.next_corner.turn_in_point -
+              100 -
+              entry.car.GetDistanceOnLap() <
+              0
+          ) {
+            entry.car.carPhysics.distanceTravelledOnLap =
+              carInFront.car.GetDistanceOnLap() - 5;
+            entry.car.carPhysics.velocity = carInFront.car.carPhysics.velocity;
+            console.log(
+              kleur.green(
+                `${entry.entryNumber} getting held up by ${carInFront.entryNumber}!`
+              )
+            );
           }
         }
-        console.log(distanceToCarInFront, carInFront.entryNumber);
       }
     });
   }
 
+  handleNew() {
+    this.cars.handle((entry) => {});
+  }
+
   findCarsClose(entry: Entry) {
-    let test = this.cars.GetCars().reduce(function (prev, curr) {
-      const distance =
+    const cars = this.cars.GetCarsByState(CarState.ON_TRACK, entry.entryNumber);
+    if (cars.length < 1) {
+      return null;
+    }
+    let test = cars.reduce(function (prev, curr) {
+      const currDistance =
         curr.car.GetDistanceOnLap() - entry.car.GetDistanceOnLap();
-      if (curr === entry) {
-        console.log('xd');
-        return prev;
-      }
-      return entry != curr &&
-        distance > 0 &&
-        distance > prev.car.GetDistanceOnLap() - entry.car.GetDistanceOnLap()
-        ? curr
-        : prev;
+      const prevDistance =
+        prev.car.GetDistanceOnLap() - entry.car.GetDistanceOnLap();
+      return currDistance > 0 && currDistance < prevDistance ? curr : prev;
     });
     return test;
   }
@@ -66,14 +91,18 @@ export class TrackMediator {
       .GetCars()
       .reduce((prev, curr) =>
         (prev != curr &&
-          curr.entryNumber !== curr.entryNumber &&
+          curr.entryNumber !== entry.entryNumber &&
           curr.car.GetDistanceOnLap() - goal > 0 &&
           curr.car.GetDistanceOnLap() - goal <
             prev.car.GetDistanceOnLap() - goal) ||
-        prev.car.GetDistanceOnLap() - goal > 0
+        prev.car.GetDistanceOnLap() - goal < 0
           ? curr
           : prev
       );
     return result;
+  }
+
+  staticJson() {
+    return {};
   }
 }

@@ -83,12 +83,9 @@ export class Car {
     const laps: number = this.GetLaps();
     this.carPhysics.Move();
     const isNextLap = this.isNextLap();
-    if (this.entry.entryNumber === 7) {
-      console.log(isNextLap);
-    }
     if (isNextLap !== -1) {
       this.laps[laps].finish(Date.now());
-      console.log(this.laps[laps]);
+      this.lapIndex += 1;
       this.laps[this.GetLaps()] = new TimedLap(this.GetLaps(), this);
       this.laps[this.GetLaps()].start(Date.now());
       this.carPhysics.distanceTravelledOnLap = isNextLap;

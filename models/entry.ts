@@ -23,7 +23,7 @@ export class Entry {
     this.entryNumber = entryNumber;
     this.car = car;
     this.car.entry = this;
-    this.state = CarState.GARAGE;
+    this.state = CarState.ON_TRACK;
     this.taskList = new TaskList();
   }
 
@@ -48,12 +48,39 @@ export class Entry {
     if (!res && this.taskList.tasks.length > 0) {
       this.taskList.StartTask(this.state);
       if (this.entryNumber == 7) {
-        console.log('start task!', this.taskList.GetCurrentTask(), this.state);
+        // console.log('start task!', this.taskList.GetCurrentTask(), this.state);
       }
     }
   }
 
   getout() {
+    this.taskList.AddTask(
+      new Task(
+        'getting out of garage',
+        1000,
+        100,
+        CarState.GARAGE,
+        1,
+        40,
+        true,
+        new GarageOut(this)
+      )
+    );
+    this.taskList.AddTask(
+      new Task(
+        'PIT OUT',
+        100,
+        100,
+        CarState.PITBOX,
+        1,
+        40,
+        true,
+        new PitboxOut(this)
+      )
+    );
+  }
+
+  getin() {
     this.taskList.AddTask(
       new Task(
         'getting out of garage',

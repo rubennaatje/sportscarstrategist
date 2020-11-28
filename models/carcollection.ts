@@ -1,31 +1,38 @@
-import { Car } from "./car";
-import { Entry } from "./entry";
+import { Car } from './car';
+import { Entry } from './entry';
+import { CarState } from './enumerations/carstate';
 
 export class CarCollection {
-    private cars: Entry[];
+  private cars: Entry[];
 
-    constructor(cars: Entry[]) {
-        this.cars = cars;
-    }
+  constructor(cars: Entry[]) {
+    this.cars = cars;
+  }
 
-    AddCar(car: Entry): void {
-        this.cars.push(car);
-    }
+  AddCar(car: Entry): void {
+    this.cars.push(car);
+  }
 
-    GetCars(): Entry[] {
-        return this.cars;
-    }
+  GetCars(): Entry[] {
+    return this.cars;
+  }
 
-    GetCarByEntryNumber(entryNumber: (string | number)) : Entry {
-        // == instead of === on purpose
-        return this.cars.find((entry) => entry.entryNumber == entryNumber);
-    }
+  GetCarsByState(state: CarState, entry: number | string = -1): Entry[] {
+    return this.cars.filter(
+      (car) => car.state === state && car.entryNumber != entry
+    );
+  }
 
-    async handle(f: (arg0: Entry) => void) {
-        for (var c of this.cars) {
-            if (c != null) {
-                f(c);
-            }
-        }
+  GetCarByEntryNumber(entryNumber: string | number): Entry {
+    // == instead of === on purpose
+    return this.cars.find((entry) => entry.entryNumber == entryNumber);
+  }
+
+  async handle(f: (arg0: Entry) => void) {
+    for (var c of this.cars) {
+      if (c != null) {
+        f(c);
+      }
     }
+  }
 }

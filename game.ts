@@ -57,6 +57,12 @@ export class Game {
         // User can now receive updates
         socket.join('game');
         socket.join(data.entryNumber);
+        // this once, send info that won't change.
+        const staticJson = {
+          track: this.track.staticJson(),
+        };
+
+        socket.emit('staticInformation', staticJson);
       });
 
       // Interval for sending the data about his entry, will only be send to him.
@@ -67,27 +73,10 @@ export class Game {
             data: user.entry.ToJson(),
             telemetry: user.entry.car.ToJSON(),
           });
-          console.log(
-            kleur.bgYellow(
-              kleur.black(
-                this.json_filesize({
-                  data: user.entry.ToJson(),
-                  telemetry: user.entry.car.ToJSON(),
-                })
-              )
-            )
-          );
           console.timeEnd(kleur.bgBlue('teamUpdate'));
           console.time(kleur.bgBlue('teamUpdate'));
-
-          const test = this.track.findCarsClose(
-            this.users.GetUser(socket.id).entry
-          );
-          console.log(
-            test.car.GetDistanceOnLap() - user.entry.car.GetDistanceOnLap()
-          );
         }
-      }, 250);
+      }, 1000);
 
       socket.on('sendMessage', (message) => {
         console.log(message);
@@ -105,8 +94,13 @@ export class Game {
       });
 
       socket.on('carOrder', (message) => {
-        if (message.order === 'getout') {
-          this.users.GetUser(socket.id).entry.getout();
+        switch (message.carOrder) {
+          case 'getout':
+            this.users.GetUser(socket.id)?.entry?.getout();
+            break;
+          case 'getin':
+            this.users.GetUser(socket.id)?.entry?.getin();
+            break;
         }
       });
 
@@ -122,9 +116,9 @@ export class Game {
       console.timeEnd(kleur.bgRed('updateCars'));
       console.time(kleur.bgRed('updateCars'));
       const dataToSend = this.LiveSession().GetCars();
-      console.log(kleur.bgGreen(this.json_filesize(dataToSend)));
+      // console.log(kleur.bgGreen(this.json_filesize(dataToSend)));
       this.io.in('game').emit('updateCars', dataToSend);
-    }, 500);
+    }, 250);
 
     const telemetryInterval = setInterval(() => {
       this.cars.handle((entry: Entry) => {
@@ -133,7 +127,7 @@ export class Game {
           entry.RunTelemetry();
         }
       });
-    }, 250);
+    }, 1000);
   }
 
   private update(): void {
@@ -142,9 +136,10 @@ export class Game {
         this.LiveSession().handle();
       }
       this.track.handle();
+
       console.timeEnd(kleur.bgWhite(' '));
       console.time(kleur.bgWhite(' '));
-    }, 50);
+    }, 20);
   }
 
   private json_filesize(value) {
