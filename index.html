@@ -16,7 +16,7 @@
       socket.on('teamUpdate', function (data) {
         console.log(data);
         // $('#messages').append('<li>' + da + '</li>');
-        socket.emit('sendMessage', { message: 'a', visibility: 'all' });
+        // socket.emit('sendMessage', { message: 'a', visibility: 'all' });
       });
       socket.on('error', function () {
         console.error(arguments);

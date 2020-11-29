@@ -73,8 +73,8 @@ export class Game {
             data: user.entry.ToJson(),
             telemetry: user.entry.car.ToJSON(),
           });
-          console.timeEnd(kleur.bgBlue('teamUpdate'));
-          console.time(kleur.bgBlue('teamUpdate'));
+          console.timeEnd(kleur.bgBlue('teamUpdate ' + socket.id));
+          console.time(kleur.bgBlue('teamUpdate' + socket.id));
         }
       }, 1000);
 
@@ -127,6 +127,7 @@ export class Game {
           entry.RunTelemetry();
         }
       });
+      console.log(this.io.sockets.rawListeners.length);
     }, 1000);
   }
 
