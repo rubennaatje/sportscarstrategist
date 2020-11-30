@@ -53,8 +53,9 @@ date: 2019-11-27
 * Spreadsheet ✅
 * Timing screen ✅
     * Realistic  
-* essentials screen 😉
+* essentials screen 👍
     * quick links to everything but also showing next pitstop, driver communication, driver settings, etc 😉
+* Custom dashboard 👍
 
 
 # Race management tools

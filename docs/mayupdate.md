@@ -1,6 +1,11 @@
+---
+title: May update
+date: 2020-05-29
+---
+
 # May Update
 
-So I might start doing these monthly, but I haven't worked on this for a while. 
+So I might start doing these monthly, but I haven't worked on this for a while. (too busy!)
 
 I'm too busy with my graduation internship at the moment. It's going good for those who are wondering but it just costs me a lot of time. 
 
