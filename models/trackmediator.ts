@@ -103,6 +103,6 @@ export class TrackMediator {
   }
 
   staticJson() {
-    return {};
+    return { track: this.track.staticJson(), cars: this.cars.staticJson() };
   }
 }

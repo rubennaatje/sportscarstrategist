@@ -35,4 +35,25 @@ export class CarCollection {
       }
     }
   }
+  staticJson(): {}[] {
+    let dataSend: {}[] = [];
+
+    this.handle((entry: Entry) => {
+      dataSend.push({
+        chassis: entry.car.chassis,
+        category: entry.category,
+        carnumber: entry.entryNumber,
+        car: {
+          drivers: entry.drivers.map((driver) => ({
+            stats: driver.driverStats,
+            name: driver.name,
+            nationality: driver.nationality,
+            category: driver.category,
+          })),
+        },
+      });
+    });
+
+    return dataSend;
+  }
 }
