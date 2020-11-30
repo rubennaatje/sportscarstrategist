@@ -53,6 +53,7 @@ export class Track {
         starting_line: this.starting_line,
         finish_line: this.finish_line,
       },
+      graphics: this.graphics,
       pitlane: this.pitlane,
       sectors: this.sectors,
       corners: this.corners,
