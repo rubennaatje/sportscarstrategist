@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Laps | Sportscar game</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    
+    <meta name="description" content="Development blog of my sportscar game">
+    
+    <link rel="preload" href="/sportscarstrategist/assets/css/1.styles.cca9cd5b.css" as="style"><link rel="preload" href="/sportscarstrategist/assets/js/app.fe235175.js" as="script"><link rel="preload" href="/sportscarstrategist/assets/js/2.7f0af5e3.js" as="script"><link rel="preload" href="/sportscarstrategist/assets/js/14.cc4ead51.js" as="script"><link rel="prefetch" href="/sportscarstrategist/assets/js/10.2e4f4b86.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/11.b867fd18.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/12.37eff055.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/13.002a1436.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/3.c2f6d42a.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/4.52879896.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/5.090d830d.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/6.1eec0fc9.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/7.187b925b.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/8.2e591518.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/9.411b8acf.js">
+    <link rel="stylesheet" href="/sportscarstrategist/assets/css/1.styles.cca9cd5b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container vuepress-theme-simple"><header class="header"><a href="/sportscarstrategist/" title="Development blog of my sportscar game" class="site-name router-link-active">
+      Sportscar game
+    </a> <div style="clear: both"></div> <div class="navbar"><a href="/sportscarstrategist/features" target="_blank" rel="noopener noreferrer" class="navbar-item">FEATURES</a><a href="/sportscarstrategist/test" target="_blank" rel="noopener noreferrer" class="navbar-item">INTRODUCTION</a><a href="https://www.notion.so/sportscargame/7ed4143c06ef470d90ea5daa4023995c?v=3fa328cf74534c9aa43276b8c84a0c52" target="_blank" rel="noopener noreferrer" class="navbar-item">ROADMAP</a></div></header> <section class="post-view"><div class="post-head"><h1 class="post-title">
+      Laps
+    </h1> <time datetime="11/30/2020" title="11/30/2020" pubdate="pubdate" class="post-date">
+  1 minute ago
+</time></div> <div class="content__default"><h1 id="laps"><a href="#laps" class="header-anchor">#</a> Laps</h1> <p><strong>Because I feel like I massively underestimated this (this was just me randomly thinking about it) I will do this totally different.</strong></p> <p>example of a tracktem, i'm calling it tracktem bcs I don't know what to call it else.</p> <div class="language-jsx extra-class"><pre class="language-jsx"><code><span class="token punctuation">{</span>
+  <span class="token string">&quot;adjustments&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token string">&quot;corners&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token string">&quot;turn&quot;</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;lift&quot;</span><span class="token operator">:</span> <span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;braking&quot;</span><span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;throttle&quot;</span><span class="token operator">:</span> <span class="token number">0</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+  <span class="token string">&quot;laps&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token string">&quot;lap_info&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token string">&quot;laptime&quot;</span><span class="token operator">:</span> <span class="token number">22222222</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;car_wear&quot;</span><span class="token operator">:</span> <span class="token number">222222</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;fuel usage&quot;</span><span class="token operator">:</span> <span class="token number">2222</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;risk&quot;</span><span class="token operator">:</span> <span class="token number">60</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token string">&quot;corners&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+          <span class="token string">&quot;turn&quot;</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;lift&quot;</span><span class="token operator">:</span> <span class="token operator">-</span><span class="token number">150</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;braking&quot;</span><span class="token operator">:</span> <span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;throttle&quot;</span><span class="token operator">:</span> <span class="token number">500</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;fuel_usage&quot;</span><span class="token operator">:</span> <span class="token number">30</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;delta&quot;</span><span class="token operator">:</span> <span class="token number">23566</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;tyre_wear&quot;</span><span class="token operator">:</span> <span class="token number">40</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;car_wear&quot;</span><span class="token operator">:</span> <span class="token number">20</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;lose_control_risk&quot;</span><span class="token operator">:</span> <span class="token number">60</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>more consistent drivers car stay closer to the tracktem. Faster drivers can drive with higher lose_control_risk. Trying to make your am go as fast as your pro isn't going to work out, he will likely spin and/or crash.</p> <h2 id="algorithm"><a href="#algorithm" class="header-anchor">#</a> Algorithm</h2> <p>Simple algorithm that, none of the stuff is visible to the user, he only ever tells the driver to brake, throttle and lift earlier or later. Direct improvement of tracktem. That's the training phase.</p> <p>In the race (or even during practice) you of course give orders, be easy on the tyres, easy with the fuel, manage the car, drive safe. Or the other way around.</p> <p>behind the scenes this works like this:</p> <div class="language-jsx extra-class"><pre class="language-jsx"><code><span class="token punctuation">{</span>
+  <span class="token string">&quot;drive_safe&quot;</span><span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+  <span class="token string">&quot;save_fuel&quot;</span><span class="token operator">:</span> <span class="token number">55</span><span class="token punctuation">,</span>
+  <span class="token string">&quot;save_tyres&quot;</span><span class="token operator">:</span> <span class="token number">45</span><span class="token punctuation">,</span>
+  <span class="token string">&quot;save_car&quot;</span><span class="token operator">:</span> <span class="token number">60</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>During training an algorithm makes sets of these tracktems. after each lap is done they get a score (which is relative to the car) and its other laps. These laps will get a score. Each lap the driver looks at it's orders and selects a lap. it's orders basically come down to the json above. Of course he can also receive changes during his lap. That's when the algorithm chooses another tracktem.</p> <p>There's other simple orders, for fuel mixture, how much defending, letting a car past, etc.</p> <h2 id="track-data"><a href="#track-data" class="header-anchor">#</a> Track data</h2> <div class="language-jsx extra-class"><pre class="language-jsx"><code><span class="token punctuation">{</span>
+    length<span class="token operator">:</span> <span class="token number">1234</span><span class="token punctuation">,</span>
+    graphics<span class="token operator">:</span> <span class="token punctuation">{</span>
+        track_path<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+        pitlane_path<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+        S1_path<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+        S2_path<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+        S3_path<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    information<span class="token operator">:</span> <span class="token punctuation">{</span>
+        location<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+        lat_lon<span class="token operator">:</span> <span class="token punctuation">{</span>lat<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> lon<span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        text<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    pitlane<span class="token operator">:</span> <span class="token punctuation">{</span>
+        start<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        end<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        length<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        pitspeed<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        pitspeed_start<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        pitspeed_end<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    sectors<span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token string">'S1'</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            start<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+            length<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token string">'S2'</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            start<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+            length<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token string">'S3'</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            start<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+            length<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    speedtrap<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    starting_line<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    finish_line<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    corners<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+        number<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        name<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+        point<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        <span class="token comment">// temp before physics</span>
+        entry_speed<span class="token operator">:</span> <span class="token number">40</span><span class="token punctuation">,</span>
+        apex_speed<span class="token operator">:</span> <span class="token number">40</span><span class="token punctuation">,</span>
+        exit_speed<span class="token operator">:</span> <span class="token number">40</span><span class="token punctuation">,</span>
+        turning_point<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        exit_point<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> 
+        lose_control_risk_multiplier<span class="token operator">:</span> <span class="token number">100</span><span class="token punctuation">,</span>
+        car_wear_multiplier<span class="token operator">:</span> <span class="token number">100</span><span class="token punctuation">,</span>
+        tyre_wear_multiplier<span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="interfaces-classes"><a href="#interfaces-classes" class="header-anchor">#</a> Interfaces / classes</h2> <div class="language-tsx extra-class"><pre class="language-tsx"><code><span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">Track</span> <span class="token punctuation">{</span>
+  length<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  speedtrap<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  starting_line<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  finish_line<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  graphics<span class="token operator">:</span> TrackGraphics<span class="token punctuation">;</span>
+  information<span class="token operator">:</span> TrackInformation<span class="token punctuation">;</span>
+  pitlane<span class="token operator">:</span> Pitlane<span class="token punctuation">;</span>
+  sectors<span class="token operator">:</span> Sector<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  corners<span class="token operator">:</span> Object<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">TrackGraphics</span> <span class="token punctuation">{</span>
+  track_path<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  pitlane_path<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  S1_path<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  S1_color<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  S2_path<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  S2_color<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  S3_path<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  S3_color<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">TrackInformation</span> <span class="token punctuation">{</span>
+  location<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  lat_lon<span class="token operator">:</span> <span class="token punctuation">{</span> lat<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span> lon<span class="token operator">:</span> <span class="token builtin">number</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  text<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">Pitlane</span> <span class="token punctuation">{</span>
+  start<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  end<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  length<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  pitspeed<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  pitspeed_start<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  pitspeed_end<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  pitboxes<span class="token operator">:</span> Pitbox<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">Pitbox</span> <span class="token punctuation">{</span>
+  point<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  entry_number<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  garage_distance<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  num<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">Sector</span> <span class="token punctuation">{</span>
+  name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  start<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  length<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">Corner</span> <span class="token punctuation">{</span>
+  num<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  point<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Temp b4 finished physics.</span>
+  entry_speed<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  apex_speed<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  exit_speed<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  <span class="token comment">// end temp stuff</span>
+
+  <span class="token comment">// Multipliers</span>
+  lose_control_risk_multiplier<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  car_wear_multiplier<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  tyre_wear_multiplier<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div></section> <footer class="footer">
+  © 2020
+  <i class="icon-user"></i>
+  Ruben Soerdien
+  <br>
+  Powered by
+  <a href="https://vuepress.vuejs.org/" rel="noopener" target="_blank">VuePress</a>
+  | Theme
+  <a href="https://github.com/viko16/vuepress-theme-simple" rel="noopener" target="_blank">Simple</a></footer></div><div class="global-ui"></div></div>
+    <script src="/sportscarstrategist/assets/js/app.fe235175.js" defer></script><script src="/sportscarstrategist/assets/js/2.7f0af5e3.js" defer></script><script src="/sportscarstrategist/assets/js/14.cc4ead51.js" defer></script>
+  </body>
+</html>

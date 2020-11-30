@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>How will it work / launch | Sportscar game</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    
+    <meta name="description" content="Development blog of my sportscar game">
+    
+    <link rel="preload" href="/sportscarstrategist/assets/css/1.styles.cca9cd5b.css" as="style"><link rel="preload" href="/sportscarstrategist/assets/js/app.fe235175.js" as="script"><link rel="preload" href="/sportscarstrategist/assets/js/2.7f0af5e3.js" as="script"><link rel="preload" href="/sportscarstrategist/assets/js/8.2e591518.js" as="script"><link rel="prefetch" href="/sportscarstrategist/assets/js/10.2e4f4b86.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/11.b867fd18.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/12.37eff055.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/13.002a1436.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/14.cc4ead51.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/3.c2f6d42a.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/4.52879896.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/5.090d830d.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/6.1eec0fc9.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/7.187b925b.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/9.411b8acf.js">
+    <link rel="stylesheet" href="/sportscarstrategist/assets/css/1.styles.cca9cd5b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container vuepress-theme-simple"><header class="header"><a href="/sportscarstrategist/" title="Development blog of my sportscar game" class="site-name router-link-active">
+      Sportscar game
+    </a> <div style="clear: both"></div> <div class="navbar"><a href="/sportscarstrategist/features" target="_blank" rel="noopener noreferrer" class="navbar-item">FEATURES</a><a href="/sportscarstrategist/test" target="_blank" rel="noopener noreferrer" class="navbar-item">INTRODUCTION</a><a href="https://www.notion.so/sportscargame/7ed4143c06ef470d90ea5daa4023995c?v=3fa328cf74534c9aa43276b8c84a0c52" target="_blank" rel="noopener noreferrer" class="navbar-item">ROADMAP</a></div></header> <section class="post-view"><div class="post-head"><h1 class="post-title">
+      How will it work / launch
+    </h1> <time datetime="11/29/2019" title="11/29/2019" pubdate="pubdate" class="post-date">
+  1 year ago
+</time></div> <div class="content__default"><p>The game consists of three executables, 1: the launcher, 2: the game frontend, 3: the race simulation</p> <p>I'm going to talk about them for a quick blog in reverse order.</p> <h2 id="race-simulation"><a href="#race-simulation" class="header-anchor">#</a> Race Simulation</h2> <p>This is the executable that runs the race. There's not much else to be said. As it won't be visually showing you anything, every interaction with this goes through the launcher or frontend.</p> <p>The frontend will have a connection with this over websockets, socket.io to be more precise.</p> <p>One thing that is important is that this process loads up everything from a race file, a json formatted document that has all the information on a race.</p> <h2 id="game-frontend"><a href="#game-frontend" class="header-anchor">#</a> Game Frontend</h2> <p>This is the place where you actually play the game, this will only handle the actual on track stuff. Look at the features blogpost for more information on that.</p> <p>This will be written Electron with Nuxt in JS. Perhaps I will convert later on to typescript but there's a bug at the moment which prevents me from that.</p> <p>There will also be an <strong>admin screen</strong> on the game frontend, if you've entered the admin pw in the launcher you will get an extra screen with will have a few options to make live changes as a sort of race director.</p> <ul><li>Remove/Give a penalty for a certain entry.</li> <li>FCY/SC stop or start.</li> <li>Skip to next session</li> <li>Set session speed (x1, x2, x3)</li> <li>DQ an entry</li> <li>Ban a user.</li> <li>Red flag the race, for pausing the race.</li></ul> <h2 id="launcher"><a href="#launcher" class="header-anchor">#</a> Launcher</h2> <p>The launcher will be the executable that you will open, this is written in electron js/nuxt as well. This will be the most important part for today.</p> <p>This launcher is where you join a session, choose an entry/car or startup a race.</p> <p>How this works is you fill in the adress (or click one of the previously joined ones) and a list of cars pops up with also a bit of session info of course. When you've selected everything and press join, the launcher will start the Game frontend process with a couple of arguments. Like username, entry and also most importantly the address of the host.</p> <p>Hosting a race will work a bit the same, you select a race and a couple of options and the executable will be started with the fitting arguments.</p> <p>It will stay on in the background and does checks for crashes (for both the RS and GF). Of course I will try to make sure this doesn't happen but you never know. The GF will just relaunch like nothing happened, everything you do is saved on the RS so there shouldn't be any issue. The RS however, because we dont' want to lose progress saves the state of the race for every leader lap into a file. when it crashes, the launcher will tell the RS to startup with that file and continue the race. The lost time will be lost unfortunately unless you have a distance set instead of a time.</p></div></section> <footer class="footer">
+  © 2020
+  <i class="icon-user"></i>
+  Ruben Soerdien
+  <br>
+  Powered by
+  <a href="https://vuepress.vuejs.org/" rel="noopener" target="_blank">VuePress</a>
+  | Theme
+  <a href="https://github.com/viko16/vuepress-theme-simple" rel="noopener" target="_blank">Simple</a></footer></div><div class="global-ui"></div></div>
+    <script src="/sportscarstrategist/assets/js/app.fe235175.js" defer></script><script src="/sportscarstrategist/assets/js/2.7f0af5e3.js" defer></script><script src="/sportscarstrategist/assets/js/8.2e591518.js" defer></script>
+  </body>
+</html>

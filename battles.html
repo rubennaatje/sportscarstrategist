@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Calculating Distances &amp; Handling battles / overtakes | Sportscar game</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    
+    <meta name="description" content="Development blog of my sportscar game">
+    
+    <link rel="preload" href="/sportscarstrategist/assets/css/1.styles.cca9cd5b.css" as="style"><link rel="preload" href="/sportscarstrategist/assets/js/app.fe235175.js" as="script"><link rel="preload" href="/sportscarstrategist/assets/js/2.7f0af5e3.js" as="script"><link rel="preload" href="/sportscarstrategist/assets/js/5.090d830d.js" as="script"><link rel="prefetch" href="/sportscarstrategist/assets/js/10.2e4f4b86.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/11.b867fd18.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/12.37eff055.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/13.002a1436.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/14.cc4ead51.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/3.c2f6d42a.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/4.52879896.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/6.1eec0fc9.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/7.187b925b.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/8.2e591518.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/9.411b8acf.js">
+    <link rel="stylesheet" href="/sportscarstrategist/assets/css/1.styles.cca9cd5b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container vuepress-theme-simple"><header class="header"><a href="/sportscarstrategist/" title="Development blog of my sportscar game" class="site-name router-link-active">
+      Sportscar game
+    </a> <div style="clear: both"></div> <div class="navbar"><a href="/sportscarstrategist/features" target="_blank" rel="noopener noreferrer" class="navbar-item">FEATURES</a><a href="/sportscarstrategist/test" target="_blank" rel="noopener noreferrer" class="navbar-item">INTRODUCTION</a><a href="https://www.notion.so/sportscargame/7ed4143c06ef470d90ea5daa4023995c?v=3fa328cf74534c9aa43276b8c84a0c52" target="_blank" rel="noopener noreferrer" class="navbar-item">ROADMAP</a></div></header> <section class="post-view"><div class="post-head"><h1 class="post-title">
+      Calculating Distances &amp; Handling battles / overtakes
+    </h1> <time datetime="11/30/2020" title="11/30/2020" pubdate="pubdate" class="post-date">
+  1 minute ago
+</time></div> <div class="content__default"><h1 id="calculating-distances-handling-battles-overtakes"><a href="#calculating-distances-handling-battles-overtakes" class="header-anchor">#</a> Calculating Distances &amp; Handling battles / overtakes</h1> <p>We need to combine this with the already existing methods to find a car close for battles.</p> <p>Run after trackmediator move, here's what happens:</p> <ol><li><p>We sort the cars by on track position.</p></li> <li><p>We either do it by telemetry</p></li> <li><p>Save it into object</p> <ol><li>Calculate time difference
+<ol><li><code>difference = FD-PD = 50m</code> <code>time delta = difference/PS = 50/90 = 0.5s</code></li></ol></li> <li>Set entry number</li> <li>Set laps</li> <li>Set fastest lap (important for timed sessions)</li></ol> <h1 id="handle-the-battles"><a href="#handle-the-battles" class="header-anchor">#</a> Handle the battles</h1></li></ol> <div class="language- extra-class"><pre class="language-text"><code>When a driver is within 6 seconds for 15 (&amp; it's for position) this will also show up as an actual battle. 
+</code></pre></div><p>When a car is within 6 seconds create a Battle object. These battle objects added / removed / kept every tick. if inside 6 seconds (no matter the order of the cars)</p> <p>A = Car in front, B = Car behind</p> <ol><li>Check if car is within 2 seconds
+<ol><li>depending on how much dirty air A gives, drop the downforce level of B. This will give it more speed on the straight, but a bit less speed in the corners and while braking.</li> <li>Check if A is within 10 meters from B
+<ol><li>Is how far is the apex?</li> <li>Almost here?</li> <li>BattleNegotiator
+<ol><li>crash / mistake</li> <li>overtake</li> <li>time lost for both</li> <li>time lost for one</li> <li>back out and focus on exit</li></ol></li> <li>far away?
+<ol><li>it's fine really lol.</li></ol></li></ol></li></ol></li></ol> <div class="language-tsx extra-class"><pre class="language-tsx"><code><span class="token keyword">class</span> <span class="token class-name">carbattles</span> <span class="token punctuation">{</span>
+    existingBattles<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    cars<span class="token operator">:</span> Record<span class="token operator">&lt;</span><span class="token builtin">string</span> <span class="token operator">|</span> <span class="token builtin">number</span><span class="token punctuation">,</span> CarBattle<span class="token operator">&gt;</span><span class="token punctuation">;</span>
+    
+    <span class="token function">HandleBattles</span><span class="token punctuation">(</span><span class="token parameter">cars</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        
+    <span class="token punctuation">}</span>
+    
+    <span class="token function">CarInBattleWith</span><span class="token punctuation">(</span><span class="token parameter">carInFront<span class="token punctuation">,</span> carInBack</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// check if CarF exists in this.cars, if so add carInBack and save him in the list too. </span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">CarBattle</span> <span class="token punctuation">{</span>
+    <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token parameter">entry<span class="token operator">:</span> Entry</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>start <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>entries <span class="token operator">=</span> <span class="token punctuation">[</span>entry<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        
+    <span class="token punctuation">}</span>
+    
+    <span class="token function">AddCar</span><span class="token punctuation">(</span><span class="token parameter">car</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Add car to list</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token function">RemoveCar</span><span class="token punctuation">(</span><span class="token parameter">car</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Remove car</span>
+        <span class="token comment">// If 1 car left destroy this battle.</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token function">handleBattle</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Check algorithm mentioned above.</span>
+        <span class="token keyword">return</span> <span class="token punctuation">;</span> <span class="token comment">//cars still in the battle</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// bit of FP, why not.</span>
+<span class="token keyword">export</span> <span class="token function-variable function">BattleNegotiator</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">carF<span class="token punctuation">,</span> carB<span class="token punctuation">,</span> distance<span class="token punctuation">,</span> distanceToCorner<span class="token punctuation">,</span> corner<span class="token punctuation">,</span> speed</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+		<span class="token comment">// calculate defence level for carF</span>
+		<span class="token comment">// This is based on wether or not it's for position, the driver and his personality</span>
+		<span class="token comment">// and also most importantly the orders from it's team boss. </span>
+		<span class="token comment">// will be put out in a number 0 is normal, -10 is a blue flag, -100 for a longer one</span>
+		<span class="token comment">// The almost exact same counts for CarB but then attacking, -100 would only be from team orders </span>
+		<span class="token comment">// or during a yellow flag, SC, w/e</span>
+    <span class="token comment">// </span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">BattleNegotiator</span> <span class="token punctuation">{</span>
+    <span class="token function">Negotiate</span><span class="token punctuation">(</span><span class="token parameter">car1<span class="token punctuation">,</span> car2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h1 id="battlenegotiator-algorithm"><a href="#battlenegotiator-algorithm" class="header-anchor">#</a> BattleNegotiator algorithm</h1> <ol><li>Calculate defense level for carF
+<ol><li>This is based on wether or not it's for position, the driver and his personality and also most importantly the orders from it's team boss. What also counts is the session type, you don't want to be in the way on a slow lap in a lap based session.</li> <li>a number will be put out, 0 is normal, -10 is a blue flag, -100 for a longer one</li> <li>10 might be for when it's not a blue flag</li></ol></li> <li>The almost exact same counts for CarB but then attacking
+<ol><li>-100 would only be from team orders or during a yellow flag, SC, w/e</li></ol></li></ol> <p>Now now check the distance from the car.</p> <ol><li>are they both way ahead of the corner?
+<ol><li>do nothing</li></ol></li> <li>are they coming up to the braking point?
+<ol><li>use the defense level to set the braking point for carF</li> <li>use attack level to set the braking point for carB</li> <li>Check if CarB will brake later than carF
+<ol><li>Give by how far to both drivers and let them decide what to do (attack, move to inside, or defend, move to inside too)</li></ol></li> <li>if blue flag move CarF braking point slightly back.</li></ol></li> <li>Are they past the braking point and right before turn in point?
+<ol><li>Are they alongside each other?
+<ol><li>One will back out (often the one on the outside)</li> <li>They both commit
+<ol><li>based on risk of corner
+<ol><li>crash</li></ol></li> <li>slight contact maybe a puncture or bodywork damage</li> <li>car on outside gets forced off</li> <li>both continue next to each other</li> <li>both go wide and lose time</li></ol></li></ol></li></ol></li></ol></div></section> <footer class="footer">
+  © 2020
+  <i class="icon-user"></i>
+  Ruben Soerdien
+  <br>
+  Powered by
+  <a href="https://vuepress.vuejs.org/" rel="noopener" target="_blank">VuePress</a>
+  | Theme
+  <a href="https://github.com/viko16/vuepress-theme-simple" rel="noopener" target="_blank">Simple</a></footer></div><div class="global-ui"></div></div>
+    <script src="/sportscarstrategist/assets/js/app.fe235175.js" defer></script><script src="/sportscarstrategist/assets/js/2.7f0af5e3.js" defer></script><script src="/sportscarstrategist/assets/js/5.090d830d.js" defer></script>
+  </body>
+</html>

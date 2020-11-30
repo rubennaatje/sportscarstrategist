@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>How is it going to be build | Sportscar game</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    
+    <meta name="description" content="Development blog of my sportscar game">
+    
+    <link rel="preload" href="/sportscarstrategist/assets/css/1.styles.cca9cd5b.css" as="style"><link rel="preload" href="/sportscarstrategist/assets/js/app.fe235175.js" as="script"><link rel="preload" href="/sportscarstrategist/assets/js/2.7f0af5e3.js" as="script"><link rel="preload" href="/sportscarstrategist/assets/js/7.187b925b.js" as="script"><link rel="prefetch" href="/sportscarstrategist/assets/js/10.2e4f4b86.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/11.b867fd18.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/12.37eff055.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/13.002a1436.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/14.cc4ead51.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/3.c2f6d42a.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/4.52879896.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/5.090d830d.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/6.1eec0fc9.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/8.2e591518.js"><link rel="prefetch" href="/sportscarstrategist/assets/js/9.411b8acf.js">
+    <link rel="stylesheet" href="/sportscarstrategist/assets/css/1.styles.cca9cd5b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container vuepress-theme-simple"><header class="header"><a href="/sportscarstrategist/" title="Development blog of my sportscar game" class="site-name router-link-active">
+      Sportscar game
+    </a> <div style="clear: both"></div> <div class="navbar"><a href="/sportscarstrategist/features" target="_blank" rel="noopener noreferrer" class="navbar-item">FEATURES</a><a href="/sportscarstrategist/test" target="_blank" rel="noopener noreferrer" class="navbar-item">INTRODUCTION</a><a href="https://www.notion.so/sportscargame/7ed4143c06ef470d90ea5daa4023995c?v=3fa328cf74534c9aa43276b8c84a0c52" target="_blank" rel="noopener noreferrer" class="navbar-item">ROADMAP</a></div></header> <section class="post-view"><div class="post-head"><h1 class="post-title">
+      How is it going to be build
+    </h1> <time datetime="10/20/2019" title="10/20/2019" pubdate="pubdate" class="post-date">
+  1 year ago
+</time></div> <div class="content__default"><h1 id="modability"><a href="#modability" class="header-anchor">#</a> Modability</h1> <p>This game is 100% moddable in terms of tracks, teams, drivers, etc
+Everything can easily be added, either by adding new files or by using a tool used to generate these files from .csv files (low priority goal atm)</p> <h1 id="multiplayer-back-end"><a href="#multiplayer-back-end" class="header-anchor">#</a> Multiplayer + back-end</h1> <p>So the game is going to be multiplayer, which is why I decided for node js (or more node ts as it's written in typescript). But it's not going to a central server. One of the players hosts the game and will share his address so that the rest can join. He is also the only one who needs the race files(or modded files). The game uses upnp to try and host the game, otherwise the host will have to port forward. Most modern routers support upnp so that's why i chose the easy route.</p> <h1 id="frontend"><a href="#frontend" class="header-anchor">#</a> Frontend</h1> <p>The frontend is written in Javascript as well, in electron even. I know there's lots of hate but it's a genius solution, especially for this game. I use it with nuxt so it's very lightweight, so far it uses only like 100mb so no worries about it using all your ram.</p> <h1 id="old-front-end"><a href="#old-front-end" class="header-anchor">#</a> Old front-end</h1> <p>The game was originally going to run in the terminal! Not because I'm a huge terminal fan but because I was at one point trying to learn unity to build the game I had in mind until i realized that game would never ever be finished as it was too big. So a terminal game was the perfect way of limiting myself.</p> <p>I even had a POC of some graphs showing and a track on screen. But at some point I realized it was difficult to do a full application with it and also difficult to distribute as you need specific settings for your terminal client in order to use it. (I used some braille characters to draw lines for my trackmap and graphs). So I looked into packaging it with a terminal client but no luck. Then I looked at running it in a Electron js app with a browser terminal emulator. Worked pretty cool but honestly the performance of the whole terminal thing wasn't too good so I decided to look into using electron with nuxt.</p> <p>And I enjoyed it so much, I had more than I ever had with the terminal app in no time. It's very modular and just nice overall.</p></div></section> <footer class="footer">
+  © 2020
+  <i class="icon-user"></i>
+  Ruben Soerdien
+  <br>
+  Powered by
+  <a href="https://vuepress.vuejs.org/" rel="noopener" target="_blank">VuePress</a>
+  | Theme
+  <a href="https://github.com/viko16/vuepress-theme-simple" rel="noopener" target="_blank">Simple</a></footer></div><div class="global-ui"></div></div>
+    <script src="/sportscarstrategist/assets/js/app.fe235175.js" defer></script><script src="/sportscarstrategist/assets/js/2.7f0af5e3.js" defer></script><script src="/sportscarstrategist/assets/js/7.187b925b.js" defer></script>
+  </body>
+</html>
