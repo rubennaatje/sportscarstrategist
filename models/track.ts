@@ -15,7 +15,7 @@ export class Track {
   sectors: Sector[];
   corners: Corner[];
 
-  constructor(length) {
+  constructor(length: number) {
     this.length = length;
   }
 

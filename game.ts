@@ -128,6 +128,7 @@ export class Game {
         }
       });
       console.log(this.io.sockets.rawListeners.length);
+      this.track.getStandings();
     }, 1000);
   }
 
@@ -138,8 +139,8 @@ export class Game {
       }
       this.track.handle();
 
-      console.timeEnd(kleur.bgWhite(' '));
-      console.time(kleur.bgWhite(' '));
+      // console.timeEnd(kleur.bgWhite(' '));
+      // console.time(kleur.bgWhite(' '));
     }, 20);
   }
 

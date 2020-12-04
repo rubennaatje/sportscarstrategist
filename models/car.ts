@@ -15,7 +15,7 @@ export class Car {
   lapIndex: number;
 
   //temp vars
-  private reachedtopspeed: boolean;
+
   constructor() {
     this.carPhysics = new CarPhysics();
     this.laps = [];

@@ -4,6 +4,8 @@ import { Car } from './car';
 import { Entry } from './entry';
 import { CarState } from './enumerations/carstate';
 import kleur = require('kleur');
+import { sortTrackPosition } from '../functions/standingssort';
+import { calculateDistanceTo } from '../functions/calculateTimeTo';
 
 export class TrackMediator {
   track: Track;
@@ -23,51 +25,66 @@ export class TrackMediator {
     this.cars.handle((entry) => {
       entry.car.Move();
 
-      if (entry.state === CarState.ON_TRACK) {
-        const carInFront = this.findCarsClose(entry);
-        if (carInFront) {
-          const distanceToCarInFront =
-            carInFront.car.GetDistanceOnLap() - entry.car.GetDistanceOnLap();
+      // if (entry.state === CarState.ON_TRACK) {
+      //   const carInFront = this.findCarsClose(entry);
+      //   if (carInFront) {
+      //     const distanceToCarInFront =
+      //       carInFront.car.GetDistanceOnLap() - entry.car.GetDistanceOnLap();
 
-          if (distanceToCarInFront < 100) {
-          }
+      //     if (distanceToCarInFront < 100) {
+      //     }
 
-          if (
-            distanceToCarInFront < 100 &&
-            entry.car.next_corner.point +
-              entry.car.next_corner.turn_in_point -
-              100 -
-              entry.car.GetDistanceOnLap() >
-              0
-          ) {
-            if (distanceToCarInFront > 10) {
-            } else {
-            }
-          } else if (
-            distanceToCarInFront > 1 &&
-            distanceToCarInFront < 5 &&
-            entry.car.next_corner.point +
-              entry.car.next_corner.turn_in_point -
-              100 -
-              entry.car.GetDistanceOnLap() <
-              0
-          ) {
-            entry.car.carPhysics.distanceTravelledOnLap =
-              carInFront.car.GetDistanceOnLap() - 5;
-            entry.car.carPhysics.velocity = carInFront.car.carPhysics.velocity;
-            console.log(
-              kleur.green(
-                `${entry.entryNumber} getting held up by ${carInFront.entryNumber}!`
-              )
-            );
-          }
-        }
-      }
+      //     if (
+      //       distanceToCarInFront < 100 &&
+      //       entry.car.next_corner.point +
+      //         entry.car.next_corner.turn_in_point -
+      //         100 -
+      //         entry.car.GetDistanceOnLap() >
+      //         0
+      //     ) {
+      //       if (distanceToCarInFront > 10) {
+      //       } else {
+      //       }
+      //     } else if (
+      //       distanceToCarInFront > 1 &&
+      //       distanceToCarInFront < 5 &&
+      //       entry.car.next_corner.point +
+      //         entry.car.next_corner.turn_in_point -
+      //         100 -
+      //         entry.car.GetDistanceOnLap() <
+      //         0
+      //     ) {
+      //       entry.car.carPhysics.distanceTravelledOnLap =
+      //         carInFront.car.GetDistanceOnLap() - 5;
+      //       entry.car.carPhysics.velocity = carInFront.car.carPhysics.velocity;
+      //       console.log(
+      //         kleur.green(
+      //           `${entry.entryNumber} getting held up by ${carInFront.entryNumber}!`
+      //         )
+      //       );
+      //     }
+      //   }
+      // }
     });
   }
 
-  handleNew() {
-    this.cars.handle((entry) => {});
+  getStandings() {
+    const res = this.cars.GetCars().sort(sortTrackPosition);
+    res.forEach((entry, i) => {
+      if (i !== 0) {
+        const carInFront = this.cars.GetCars()[i - 1];
+
+        console.log(
+          i + 1,
+          entry.entryNumber,
+          calculateDistanceTo(
+            carInFront.car.GetDistanceOnLap(),
+            entry.car.GetDistanceOnLap(),
+            entry.car.carPhysics.getVelocity()
+          )
+        );
+      }
+    });
   }
 
   findCarsClose(entry: Entry) {
