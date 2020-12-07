@@ -6,5 +6,6 @@ export class PitboxOut extends EndTask {
   protected DoAction(entry: Entry): void {
     console.log('pitbox out!');
     entry.state = CarState.PIT_OUT;
+    entry.car.carPhysics.distanceTravelledOnPitlane = entry.GetPitBox().point;
   }
 }

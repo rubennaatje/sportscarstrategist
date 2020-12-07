@@ -4,6 +4,7 @@ import { Entry } from './entry';
 import { TimedLap } from './timedlap';
 import { Corner } from './Corner.1';
 import { Track } from './track';
+import { CarState } from './enumerations/carstate';
 
 export class Car {
   chassis: IChassis;
@@ -13,7 +14,9 @@ export class Car {
   laps: TimedLap[];
   next_corner: Corner;
   lapIndex: number;
-
+  sessionIndex: number;
+  onTrack: boolean;
+  pitIn: boolean;
   //temp vars
 
   constructor() {
@@ -22,6 +25,8 @@ export class Car {
     this.laps[0] = new TimedLap(0, this);
     this.laps[0].start(Date.now());
     this.lapIndex = 0;
+    this.onTrack = true;
+    this.pitIn = true;
   }
 
   GetTrack(): Track {
@@ -67,6 +72,13 @@ export class Car {
     return this.carPhysics.distanceTravelledOnLap;
   }
 
+  GetFastestLap(sessionIndex: number) {
+    const fastestLap = this.laps.sort((a, b) =>
+      a.laptimeS < b.laptimeS ? 1 : -1
+    )[0];
+    return { laptime: fastestLap.laptimeS, lapNr: fastestLap.lapNR };
+  }
+
   GetPercentage(round: boolean = false) {
     var percentage = (this.GetDistanceOnLap() / this.entry.track.length) * 100;
     if (round) {
@@ -75,27 +87,95 @@ export class Car {
     return percentage;
   }
 
+  GetPitlanePercentage(round: boolean = false) {
+    var percentage =
+      (this.carPhysics.distanceTravelledOnPitlane /
+        this.entry.track.pitlane.length) *
+      100;
+    // console.log((62.67199999999963 / this.entry.track.pitlane.length) * 100);
+    // 300 / 600 == 2 * 100 = 200
+    if (round) {
+      return Math.round(percentage);
+    }
+    return percentage;
+  }
   Brake(percentage: number) {
     this.carPhysics.Decelerate(this.chassis);
   }
 
   Move() {
-    const laps: number = this.GetLaps();
-    this.carPhysics.Move();
-    const isNextLap = this.isNextLap();
-    if (isNextLap !== -1) {
-      this.laps[laps].finish(Date.now());
-      this.lapIndex += 1;
-      this.laps[this.GetLaps()] = new TimedLap(this.GetLaps(), this);
-      this.laps[this.GetLaps()].start(Date.now());
-      this.carPhysics.distanceTravelledOnLap = isNextLap;
-    }
+    const oldLocation = this.GetDistanceOnLap();
+    if (this.onTrack) {
+      const laps: number = this.GetLaps();
+      this.carPhysics.Move();
+      const newLocation = this.GetDistanceOnLap();
+      const isNextLap = this.isNextLap();
+      if (isNextLap !== -1) {
+        this.laps[laps].finish(Date.now());
+        // console.log(this.laps[laps]);
+        this.lapIndex += 1;
+        this.laps[this.GetLaps()] = new TimedLap(this.GetLaps(), this);
+        this.laps[this.GetLaps()].start(Date.now());
+        this.carPhysics.distanceTravelledOnLap = isNextLap;
+        console.log('next lap!', this.entry.entryNumber);
+      } else if (
+        this.pitIn &&
+        oldLocation <= this.GetTrack().pitlane.start &&
+        newLocation > this.GetTrack().pitlane.start
+      ) {
+        console.log('shoot into pitlane');
+        this.onTrack = false;
+        this.pitIn = false;
+        this.entry.state = CarState.PIT_IN;
+      }
 
-    if (
-      this.next_corner.exit_point + this.next_corner.point <
-      this.GetDistanceOnLap()
+      if (
+        this.next_corner.exit_point + this.next_corner.point <
+        this.GetDistanceOnLap()
+      ) {
+        this.next_corner = this.GetNextCornerOnTrack();
+      }
+    } else if (
+      this.entry.state !== CarState.GARAGE &&
+      this.entry.state !== CarState.PITBOX
     ) {
-      this.next_corner = this.GetNextCornerOnTrack();
+      // PIT stuff
+      const pitlane = this.GetTrack().pitlane;
+      const oldPitlaneDistance = this.carPhysics.distanceTravelledOnPitlane;
+      this.carPhysics.MoveInPitlane();
+      const pitlanedistance = this.carPhysics.distanceTravelledOnPitlane;
+
+      if (
+        oldPitlaneDistance < pitlane.pitlaneFL &&
+        pitlanedistance > pitlane.pitlaneFL
+      ) {
+        const laps: number = this.GetLaps();
+        this.laps[laps].finish(Date.now());
+        // console.log(this.laps[laps]);
+        this.lapIndex += 1;
+        this.laps[this.GetLaps()] = new TimedLap(this.GetLaps(), this);
+        this.laps[this.GetLaps()].start(Date.now());
+        this.carPhysics.distanceTravelledOnLap = 0;
+      }
+      switch (this.entry.state) {
+        case CarState.PIT_IN:
+          if (this.entry.GetPitBox()?.point < pitlanedistance) {
+            console.log('pitted');
+            this.entry.state = CarState.PITBOX;
+          }
+        case CarState.PIT_OUT: {
+          // console.log('finito no!', pitlanedistance);
+          if (pitlanedistance > pitlane.length) {
+            // console.log('finito yes!');
+            this.onTrack = true;
+            this.carPhysics.distanceTravelledOnLap = pitlane.end;
+            this.carPhysics.distanceTravelledOnPitlane = 0;
+            this.entry.state = CarState.ON_TRACK;
+            this.Move();
+            this.next_corner = this.GetNextCornerOnTrack();
+          }
+        }
+      }
     }
   }
 
@@ -107,6 +187,7 @@ export class Car {
       speed: this.carPhysics.getVelocity('km/h'),
       currentTelemetry: this.laps[this.GetLaps()].telemetry.speed,
       laptimes: this.GetLaptimes(),
+      inPitlane: !this.onTrack,
     };
   }
 

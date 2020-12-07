@@ -17,6 +17,8 @@ let track = new Track(7001);
 track.corners = trackk.corners;
 track.graphics = trackk.graphics;
 track.information = trackk.information;
+track.sectors = trackk.sectors;
+track.pitlane = trackk.pitlane;
 //ignore
 var entries = CARS;
 //xd
@@ -24,6 +26,7 @@ var cars: Entry[] = [];
 
 for (var entry = 0; entry < CARS.length - 1; entry++) {
   var val = entries[entry];
+  track.pitlane.pitboxes[entry].entry_number = val.number;
   var jcar: Car = new Car();
   var jentry: Entry = new Entry(val.number, jcar);
   jentry.drivers.push(
@@ -83,7 +86,7 @@ let freepractice: Session = new Session(
   100,
   0,
   new Date('10-10-2019'),
-  SessionType.LapTimeBased
+  SessionType.PostionBased
 );
 game.AddSession(freepractice);
 

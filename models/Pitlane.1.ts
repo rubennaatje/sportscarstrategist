@@ -8,4 +8,5 @@ export interface Pitlane {
   pitspeed_start: number;
   pitspeed_end: number;
   pitboxes: Pitbox[];
+  pitlaneFL: number;
 }

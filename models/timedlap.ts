@@ -1,37 +1,36 @@
-import { Telemetry } from "./telemetry";
-import { Car } from "./car";
+import { Telemetry } from './telemetry';
+import { Car } from './car';
 
 export class TimedLap {
-    lapNR: number;
-    startTimeS: number;
-    laptimeS: number;
-    telemetry: Telemetry;
-    
-    constructor(i: number, car: Car){
-        this.lapNR = i;
-        this.telemetry = new Telemetry(car);
-    } 
+  lapNR: number;
+  startTimeS: number;
+  laptimeS: number;
+  telemetry: Telemetry;
 
-    handle(){
-        this.telemetry.handle();
-    }
+  constructor(i: number, car: Car) {
+    this.lapNR = i;
+    this.telemetry = new Telemetry(car);
+  }
 
-    start(time: number){
-        this.startTimeS = time;
-    }
+  handle() {
+    this.telemetry.handle();
+    console.log('handle telemetry', this.lapNR);
+  }
 
-    finish(time: number){
-        this.laptimeS = time - this.startTimeS;
-    }
+  start(time: number) {
+    this.startTimeS = time;
+  }
 
-    ToJSON(){
-        return {
-            lapNR: this.lapNR,
-            startTimeS: this.startTimeS,
-            laptimeS: this.laptimeS,
-            telemetry: this.telemetry.ToJSON()
-        }
-    }
+  finish(time: number) {
+    this.laptimeS = time - this.startTimeS;
+  }
 
-
+  ToJSON() {
+    return {
+      lapNR: this.lapNR,
+      startTimeS: this.startTimeS,
+      laptimeS: this.laptimeS,
+      telemetry: this.telemetry.ToJSON(),
+    };
+  }
 }

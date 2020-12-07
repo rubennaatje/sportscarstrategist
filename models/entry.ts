@@ -6,6 +6,8 @@ import { TaskList } from './tasklist';
 import { Task } from './task';
 import { GarageOut } from './end-tasks/end-garage-pitbox';
 import { PitboxOut } from './end-tasks/pitbox-pitlane';
+import { SessionFacts } from './interfaces/sessionfacts';
+import { GarageIn } from './end-tasks/garage-in';
 
 export class Entry {
   category: string;
@@ -16,6 +18,7 @@ export class Entry {
   track: Track;
   state: CarState;
   taskList: TaskList;
+  sessionFacts: SessionFacts;
 
   constructor(entryNumber: string | number, car: Car) {
     this.drivers = [];
@@ -25,6 +28,7 @@ export class Entry {
     this.car.entry = this;
     this.state = CarState.ON_TRACK;
     this.taskList = new TaskList();
+    this.sessionFacts = {} as SessionFacts;
   }
 
   handle() {
@@ -38,9 +42,12 @@ export class Entry {
         break;
       case CarState.PITBOX:
         break;
+      case CarState.PIT_IN:
+        this.GetActiveDriver().handle(this.car);
+        break;
       case CarState.PIT_OUT:
         this.GetActiveDriver().handle(this.car);
-        this.state = CarState.ON_TRACK;
+        // this.state = CarState.ON_TRACK;
         break;
     }
 
@@ -57,8 +64,8 @@ export class Entry {
     this.taskList.AddTask(
       new Task(
         'getting out of garage',
-        1000,
-        100,
+        19000,
+        0,
         CarState.GARAGE,
         1,
         40,
@@ -69,8 +76,8 @@ export class Entry {
     this.taskList.AddTask(
       new Task(
         'PIT OUT',
-        100,
-        100,
+        13000,
+        0,
         CarState.PITBOX,
         1,
         40,
@@ -78,43 +85,40 @@ export class Entry {
         new PitboxOut(this)
       )
     );
+    this.car.pitIn = false;
   }
 
   getin() {
+    this.car.pitIn = true;
     this.taskList.AddTask(
       new Task(
-        'getting out of garage',
-        1000,
-        100,
-        CarState.GARAGE,
-        1,
-        40,
-        true,
-        new GarageOut(this)
-      )
-    );
-    this.taskList.AddTask(
-      new Task(
-        'PIT OUT',
-        100,
-        100,
+        'GARAGE IN',
+        13000,
+        0,
         CarState.PITBOX,
         1,
         40,
         true,
-        new PitboxOut(this)
+        new GarageIn(this)
       )
     );
   }
 
   RunTelemetry() {
-    // in the future this will be a list of ITelemetry items that will be looped through
     // this.telemetry.handle();
-    this.car.laps[this.car.GetLaps()].handle();
+    if (this.state === CarState.ON_TRACK) {
+      this.car.laps[this.car.GetLaps()].handle();
+    }
   }
 
   GetActiveDriver() {
     return this.drivers[this.currentDriverIndex];
+  }
+
+  GetPitBox() {
+    return this.track.pitlane.pitboxes.find(
+      (pitbox) => this.entryNumber == pitbox.entry_number
+    );
   }
 
   // send data

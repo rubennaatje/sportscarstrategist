@@ -73,14 +73,19 @@ export class Game {
             data: user.entry.ToJson(),
             telemetry: user.entry.car.ToJSON(),
           });
-          console.timeEnd(kleur.bgBlue('teamUpdate ' + socket.id));
-          console.time(kleur.bgBlue('teamUpdate' + socket.id));
+          // console.timeEnd(kleur.bgBlue('teamUpdate ' + socket.id));
+          // console.time(kleur.bgBlue('teamUpdate' + socket.id));
         }
       }, 1000);
 
       socket.on('sendMessage', (message) => {
         console.log(message);
-        this.cars.GetCarByEntryNumber(message.message)?.getout();
+        const entry = this.cars.GetCarByEntryNumber(message.message);
+        entry?.car?.onTrack
+          ? entry.car.pitIn
+            ? entry?.getout()
+            : entry?.getin()
+          : entry?.getout();
         this.io
           .in('game')
           .emit(
@@ -113,22 +118,20 @@ export class Game {
     });
 
     const interval = setInterval(() => {
-      console.timeEnd(kleur.bgRed('updateCars'));
-      console.time(kleur.bgRed('updateCars'));
+      // console.timeEnd(kleur.bgRed('updateCars'));
+      // console.time(kleur.bgRed('updateCars'));
       const dataToSend = this.LiveSession().GetCars();
       // console.log(kleur.bgGreen(this.json_filesize(dataToSend)));
       this.io.in('game').emit('updateCars', dataToSend);
+      this.track.getStandings();
     }, 250);
 
     const telemetryInterval = setInterval(() => {
       this.cars.handle((entry: Entry) => {
-        // Q1W - some weird kid on the train that decided to suddenly touch my keyboard
         if (entry.state === CarState.ON_TRACK) {
           entry.RunTelemetry();
         }
       });
-      console.log(this.io.sockets.rawListeners.length);
-      this.track.getStandings();
     }, 1000);
   }
 
@@ -138,10 +141,7 @@ export class Game {
         this.LiveSession().handle();
       }
       this.track.handle();
-
-      // console.timeEnd(kleur.bgWhite(' '));
-      // console.time(kleur.bgWhite(' '));
-    }, 20);
+    }, 10);
   }
 
   private json_filesize(value) {

@@ -4,12 +4,14 @@ import { IChassis } from './interfaces/chassis';
 export class CarPhysics {
   velocity: number;
   distanceTravelledOnLap: number;
+  distanceTravelledOnPitlane: number;
   lastCheck: Date;
 
   constructor() {
     this.lastCheck = new Date();
     this.velocity = 0;
     this.distanceTravelledOnLap = 0;
+    this.distanceTravelledOnPitlane = 0;
   }
 
   GetNewVelocity(AccelerationMS: number, friction: number = 0) {
@@ -83,6 +85,12 @@ export class CarPhysics {
       this.distanceTravelledOnLap + (this.getVelocity() / 1000) * msPassed;
   }
 
+  MoveInPitlane() {
+    let msPassed = this.GetTimePassed(true);
+    this.distanceTravelledOnPitlane =
+      this.distanceTravelledOnPitlane + (16 / 1000) * msPassed;
+  }
+
   CalculateFriction(chassis: IChassis) {
     return (
       ((((chassis.drag / 100 + 1) *
@@ -99,7 +107,7 @@ export class CarPhysics {
     if (isCheck) {
       this.lastCheck = new Date();
     }
-    return dif;
+    return dif * 3;
   }
 
   CalculateAcceleration(chassis: IChassis): number {
