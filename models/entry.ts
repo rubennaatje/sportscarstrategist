@@ -8,6 +8,7 @@ import { GarageOut } from './end-tasks/end-garage-pitbox';
 import { PitboxOut } from './end-tasks/pitbox-pitlane';
 import { SessionFacts } from './interfaces/sessionfacts';
 import { GarageIn } from './end-tasks/garage-in';
+import kleur = require('kleur');
 
 export class Entry {
   category: string;
@@ -107,7 +108,7 @@ export class Entry {
   RunTelemetry() {
     // this.telemetry.handle();
     if (this.state === CarState.ON_TRACK) {
-      this.car.laps[this.car.GetLaps()].handle();
+      this.car.laps[this.car.GetLapsIndex()].handle();
     }
   }
 

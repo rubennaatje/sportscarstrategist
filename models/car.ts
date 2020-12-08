@@ -11,7 +11,7 @@ export class Car {
   EngineOn: boolean;
   carPhysics: CarPhysics;
   entry: Entry;
-  laps: TimedLap[];
+  laps: Record<number, TimedLap>;
   next_corner: Corner;
   lapIndex: number;
   sessionIndex: number;
@@ -21,9 +21,10 @@ export class Car {
 
   constructor() {
     this.carPhysics = new CarPhysics();
-    this.laps = [];
+    this.laps = {};
     this.laps[0] = new TimedLap(0, this);
     this.laps[0].start(Date.now());
+
     this.lapIndex = 0;
     this.onTrack = true;
     this.pitIn = true;
@@ -53,8 +54,12 @@ export class Car {
     const acceleration = this.carPhysics.Accelerate(this.chassis);
   }
 
-  GetLaps(): number {
+  GetLapsIndex(): number {
     return this.lapIndex;
+  }
+
+  GetLapsAsArray() {
+    return Object.values(this.laps);
   }
 
   isNextLap(): number {
@@ -73,7 +78,7 @@ export class Car {
   }
 
   GetFastestLap(sessionIndex: number) {
-    const fastestLap = this.laps.sort((a, b) =>
+    const fastestLap = this.GetLapsAsArray().sort((a, b) =>
       a.laptimeS < b.laptimeS ? 1 : -1
     )[0];
     return { laptime: fastestLap.laptimeS, lapNr: fastestLap.lapNR };
@@ -92,8 +97,6 @@ export class Car {
       (this.carPhysics.distanceTravelledOnPitlane /
         this.entry.track.pitlane.length) *
       100;
-    // console.log((62.67199999999963 / this.entry.track.pitlane.length) * 100);
-    // 300 / 600 == 2 * 100 = 200
     if (round) {
       return Math.round(percentage);
     }
@@ -106,16 +109,20 @@ export class Car {
   Move() {
     const oldLocation = this.GetDistanceOnLap();
     if (this.onTrack) {
-      const laps: number = this.GetLaps();
+      const laps: number = this.GetLapsIndex();
       this.carPhysics.Move();
       const newLocation = this.GetDistanceOnLap();
       const isNextLap = this.isNextLap();
       if (isNextLap !== -1) {
         this.laps[laps].finish(Date.now());
-        // console.log(this.laps[laps]);
+
         this.lapIndex += 1;
-        this.laps[this.GetLaps()] = new TimedLap(this.GetLaps(), this);
-        this.laps[this.GetLaps()].start(Date.now());
+        this.laps[this.GetLapsIndex()] = new TimedLap(
+          this.GetLapsIndex(),
+          this
+        );
+        this.laps[this.GetLapsIndex()].start(Date.now());
+
         this.carPhysics.distanceTravelledOnLap = isNextLap;
         console.log('next lap!', this.entry.entryNumber);
       } else if (
@@ -149,12 +156,15 @@ export class Car {
         oldPitlaneDistance < pitlane.pitlaneFL &&
         pitlanedistance > pitlane.pitlaneFL
       ) {
-        const laps: number = this.GetLaps();
+        const laps: number = this.GetLapsIndex();
         this.laps[laps].finish(Date.now());
         // console.log(this.laps[laps]);
         this.lapIndex += 1;
-        this.laps[this.GetLaps()] = new TimedLap(this.GetLaps(), this);
-        this.laps[this.GetLaps()].start(Date.now());
+        this.laps[this.GetLapsIndex()] = new TimedLap(
+          this.GetLapsIndex(),
+          this
+        );
+        this.laps[this.GetLapsIndex()].start(Date.now());
         this.carPhysics.distanceTravelledOnLap = 0;
       }
       switch (this.entry.state) {
@@ -164,9 +174,7 @@ export class Car {
             this.entry.state = CarState.PITBOX;
           }
         case CarState.PIT_OUT: {
-          // console.log('finito no!', pitlanedistance);
           if (pitlanedistance > pitlane.length) {
-            // console.log('finito yes!');
             this.onTrack = true;
             this.carPhysics.distanceTravelledOnLap = pitlane.end;
             this.carPhysics.distanceTravelledOnPitlane = 0;
@@ -182,10 +190,10 @@ export class Car {
   ToJSON() {
     return {
       lapdistance: this.GetDistanceOnLap(),
-      laps: this.GetLaps(),
+      laps: this.GetLapsIndex(),
       percentage: this.GetPercentage(),
       speed: this.carPhysics.getVelocity('km/h'),
-      currentTelemetry: this.laps[this.GetLaps()].telemetry.speed,
+      currentTelemetry: this.laps[this.GetLapsIndex()].telemetry.speed,
       laptimes: this.GetLaptimes(),
       inPitlane: !this.onTrack,
     };
@@ -194,7 +202,7 @@ export class Car {
   GetLaptimes() {
     let res = [];
 
-    this.laps.forEach((lap) => {
+    this.GetLapsAsArray().forEach((lap) => {
       res.push(lap.laptimeS);
     });
 
@@ -203,7 +211,7 @@ export class Car {
 
   GetTelemetry(lap: number = -1) {
     if (lap === -1) {
-      return this.laps[this.GetLaps()].telemetry.speed;
+      return this.laps[this.GetLapsIndex()].telemetry.speed;
     } else {
       return this.laps[lap].telemetry.speed;
     }

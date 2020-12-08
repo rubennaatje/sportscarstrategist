@@ -132,7 +132,7 @@ export class Game {
           entry.RunTelemetry();
         }
       });
-    }, 1000);
+    }, 250);
   }
 
   private update(): void {

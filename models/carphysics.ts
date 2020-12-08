@@ -53,7 +53,6 @@ export class CarPhysics {
   }
 
   Accelerate(chassis: IChassis) {
-    // console.clear();
     let msPassed = this.GetTimePassed();
 
     if (this.getVelocity('km/h') < chassis.engine.topspeed && msPassed > 0) {

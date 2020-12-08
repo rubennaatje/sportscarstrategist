@@ -18,20 +18,12 @@ export class Telemetry {
       val: this.car.carPhysics.getVelocity('km/h'),
       delta: this.calculateDelta(),
     });
-    if (this.car.entry.entryNumber === 7) {
-      console.log('time', this.calculateDelta());
-    }
-    console.log(
-      this.car.entry.entryNumber,
-      'handling telemetry',
-      this.speed.length
-    );
   }
   calculateDelta() {
-    const lastLapTelemetry = this.car.GetTelemetry(this.car.GetLaps() - 1);
+    const lastLapTelemetry = this.car.GetTelemetry(this.car.GetLapsIndex() - 1);
 
     if (
-      this.car.GetLaps() <= 1 ||
+      this.car.GetLapsIndex() <= 1 ||
       !lastLapTelemetry ||
       lastLapTelemetry.length <= 0
     ) {

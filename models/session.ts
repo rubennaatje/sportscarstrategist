@@ -60,7 +60,7 @@ export class Session {
   GetCars() {
     const res = this.cars
       .GetCars()
-      .sort(getSortFunction(this.sessionType))
+      .sort(getSortFunction(SessionType.PostionBased))
       .map((entry, i, array) => ({
         pos: i + 1,
         gap:
@@ -73,7 +73,7 @@ export class Session {
               ),
         car2: entry.car.chassis.name,
         category: entry.category,
-        laps: entry.car.GetLaps(),
+        laps: entry.car.GetLapsIndex(),
         lapdistance: entry.car.GetDistanceOnLap(),
         percentage: entry.car.GetPercentage(),
         pitlaneDistance: entry.car.carPhysics.distanceTravelledOnPitlane,
@@ -84,11 +84,7 @@ export class Session {
         realdeal: entry.ToJson(),
       }))
       .sort(sortByEntryNumber);
-    res.forEach((car) => {
-      if (car.carnumber === 7 || car.carnumber === 1) {
-        // console.log(car.pitlanePercentage);
-      }
-    });
+
     return res;
   }
 
