@@ -6,6 +6,7 @@ import { TrackMediator } from './models/trackmediator';
 import { Chat } from './models/chat/chat';
 import * as kleur from 'kleur';
 import { CarState } from './models/enumerations/carstate';
+import { Log } from './models/singletons/log';
 
 export class Game {
   private io: SocketIO.Server;
@@ -72,6 +73,7 @@ export class Game {
           socket.emit('teamUpdate', {
             data: user.entry.ToJson(),
             telemetry: user.entry.car.ToJSON(),
+            log: Log.getInstance().getStrings().slice(-5, -1),
           });
           // console.timeEnd(kleur.bgBlue('teamUpdate ' + socket.id));
           // console.time(kleur.bgBlue('teamUpdate' + socket.id));
@@ -123,7 +125,7 @@ export class Game {
       const dataToSend = this.LiveSession().GetCars();
       // console.log(kleur.bgGreen(this.json_filesize(dataToSend)));
       this.io.in('game').emit('updateCars', dataToSend);
-      this.track.getStandings();
+      // this.track.getStandings();
     }, 250);
 
     const telemetryInterval = setInterval(() => {

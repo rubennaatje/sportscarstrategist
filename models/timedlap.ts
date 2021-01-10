@@ -14,7 +14,6 @@ export class TimedLap {
 
   handle() {
     this.telemetry.handle();
-    console.log('handle telemetry', this.lapNR);
   }
 
   start(time: number) {
