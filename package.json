@@ -22,9 +22,12 @@
     "typescript": "^3.5.1"
   },
   "dependencies": {
+    "@types/lokijs": "^1.5.3",
     "@types/socket.io": "^2.1.4",
+    "cpu-stat": "^2.0.1",
     "express": "^4.17.1",
     "kleur": "^3.0.3",
+    "lokijs": "^1.5.11",
     "socket.io": "^2.2.0"
   },
   "husky": {

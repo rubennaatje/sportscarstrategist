@@ -2,18 +2,17 @@ import { Entry } from '../models/entry';
 import { SessionType } from '../models/enumerations/sessiontype';
 import { sendData } from '../models/interfaces/sendData';
 
-export const sortTrackPositionWithLaps = (a: Entry, b: Entry) =>
-  a.car.laps < b.car.laps
-    ? 1
-    : a.car.laps === b.car.laps
-    ? a.car.GetDistanceOnLap() < b.car.GetDistanceOnLap()
-      ? 1
-      : a.car.GetDistanceOnLap() === b.car.GetDistanceOnLap()
-      ? +a.entryNumber > +b.entryNumber
-        ? 1
-        : -1
-      : -1
-    : -1;
+export const sortTrackPositionWithLaps = (a: Entry, b: Entry) => {
+  const [carA, carB, equal] = [1, 2, 3];
+
+  if (a.car.lapIndex < b.car.lapIndex) {
+    return carB;
+  } else if (a.car.lapIndex > b.car.lapIndex) {
+    return carA;
+  }
+  // If equal then:
+  return sortTrackPosition(a, b);
+};
 
 export const sortTrackPosition = (a: Entry, b: Entry) =>
   a.car.GetDistanceOnLap() < b.car.GetDistanceOnLap()

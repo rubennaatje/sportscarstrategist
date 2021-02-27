@@ -6,6 +6,8 @@ import { TrackMediator } from './models/trackmediator';
 import { Chat } from './models/chat/chat';
 import * as kleur from 'kleur';
 import { CarState } from './models/enumerations/carstate';
+import { TelemetryLog } from './models/singletons/TelemetryLog';
+import cpuStat from 'cpu-stat';
 
 export class Game {
   private io: SocketIO.Server;
@@ -124,6 +126,20 @@ export class Game {
       // console.log(kleur.bgGreen(this.json_filesize(dataToSend)));
       this.io.in('game').emit('updateCars', dataToSend);
       this.track.getStandings();
+      const memUsage = process.memoryUsage();
+      console.log({ left: (memUsage.rss / (1024 * 1024)).toFixed(2) });
+      //by default returns cpu usage percent for all cores over a period of the next 1000ms
+      cpuStat.usagePercent(function (err, percent, seconds) {
+        if (err) {
+          return console.log(err);
+        }
+
+        //the percentage cpu usage over all cores
+        console.log(percent);
+
+        //the approximate number of seconds the sample was taken over
+        console.log(seconds);
+      });
     }, 250);
 
     const telemetryInterval = setInterval(() => {
@@ -132,6 +148,7 @@ export class Game {
           entry.RunTelemetry();
         }
       });
+      TelemetryLog.getInstance().getUpdate();
     }, 250);
   }
 
@@ -141,10 +158,11 @@ export class Game {
         this.LiveSession().handle();
       }
       this.track.handle();
-    }, 10);
+    }, 4);
   }
 
   private json_filesize(value) {
+    ``;
     // returns object size in bytes
     return JSON.stringify(value).length / 1024 / 1024;
   }

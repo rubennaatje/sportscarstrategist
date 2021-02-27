@@ -3,16 +3,17 @@ import { calculateDistanceTo } from '../functions/calculateTimeTo';
 
 export class Telemetry {
   private car: Car;
-  speed: { pos: number; time: number; val: number; delta: number }[];
+  data: { pos: number; time: number; val: number; delta: number }[];
   date: number;
+
   constructor(car: Car) {
     this.car = car;
-    this.speed = [];
+    this.data = [];
     this.date = Date.now();
   }
 
   handle() {
-    this.speed.push({
+    this.data.push({
       pos: this.car.GetDistanceOnLap(),
       time: (Date.now() - this.date) / 1000,
       val: this.car.carPhysics.getVelocity('km/h'),
@@ -45,7 +46,7 @@ export class Telemetry {
 
   ToJSON() {
     return {
-      speed: this.speed,
+      speed: this.data,
     };
   }
 }

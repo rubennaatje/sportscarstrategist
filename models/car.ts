@@ -27,7 +27,7 @@ export class Car {
 
     this.lapIndex = 0;
     this.onTrack = true;
-    this.pitIn = true;
+    this.pitIn = false;
   }
 
   GetTrack(): Track {
@@ -124,7 +124,6 @@ export class Car {
         this.laps[this.GetLapsIndex()].start(Date.now());
 
         this.carPhysics.distanceTravelledOnLap = isNextLap;
-        console.log('next lap!', this.entry.entryNumber);
       } else if (
         this.pitIn &&
         oldLocation <= this.GetTrack().pitlane.start &&
@@ -193,7 +192,7 @@ export class Car {
       laps: this.GetLapsIndex(),
       percentage: this.GetPercentage(),
       speed: this.carPhysics.getVelocity('km/h'),
-      currentTelemetry: this.laps[this.GetLapsIndex()].telemetry.speed,
+      currentTelemetry: this.laps[this.GetLapsIndex()].telemetry.data,
       laptimes: this.GetLaptimes(),
       inPitlane: !this.onTrack,
     };
@@ -211,9 +210,9 @@ export class Car {
 
   GetTelemetry(lap: number = -1) {
     if (lap === -1) {
-      return this.laps[this.GetLapsIndex()].telemetry.speed;
+      return this.laps[this.GetLapsIndex()].telemetry.data;
     } else {
-      return this.laps[lap].telemetry.speed;
+      return this.laps[lap].getTelemetry();
     }
   }
 }
