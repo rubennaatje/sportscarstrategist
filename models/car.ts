@@ -5,6 +5,7 @@ import { TimedLap } from './timedlap';
 import { Corner } from './Corner.1';
 import { Track } from './track';
 import { CarState } from './enumerations/carstate';
+import { Log } from './singletons/log';
 
 export class Car {
   chassis: IChassis;
@@ -115,6 +116,9 @@ export class Car {
       const isNextLap = this.isNextLap();
       if (isNextLap !== -1) {
         this.laps[laps].finish(Date.now());
+        Log.getInstance().AddEvent(
+          `${this.entry.entryNumber} - ${this.laps[laps].lapNR} lap finished ${this.laps[laps].laptimeS}`
+        );
 
         this.lapIndex += 1;
         this.laps[this.GetLapsIndex()] = new TimedLap(
@@ -157,7 +161,7 @@ export class Car {
       ) {
         const laps: number = this.GetLapsIndex();
         this.laps[laps].finish(Date.now());
-        // console.log(this.laps[laps]);
+
         this.lapIndex += 1;
         this.laps[this.GetLapsIndex()] = new TimedLap(
           this.GetLapsIndex(),

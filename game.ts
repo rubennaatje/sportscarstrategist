@@ -74,6 +74,7 @@ export class Game {
           socket.emit('teamUpdate', {
             data: user.entry.ToJson(),
             telemetry: user.entry.car.ToJSON(),
+            log: Log.getInstance().getStrings().slice(-5, -1),
           });
           // console.timeEnd(kleur.bgBlue('teamUpdate ' + socket.id));
           // console.time(kleur.bgBlue('teamUpdate' + socket.id));

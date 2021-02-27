@@ -17,6 +17,7 @@ export class Session {
   private startTime: Date;
   private sessionType: SessionType;
   private sessionName: string;
+  private sessionIndex: number;
   private data: {}[];
 
   cars: CarCollection;
@@ -27,7 +28,8 @@ export class Session {
     lengthMinutes: number,
     lengthLaps: number,
     startTime: Date,
-    sessionType: SessionType
+    sessionType: SessionType,
+    sessionIndex: number = 1
   ) {
     this.sessionName = sessionName;
     this.lengthLaps = lengthLaps;
@@ -35,6 +37,7 @@ export class Session {
     this.startTime = startTime;
     this.sessionType = sessionType;
     this.cars = cars;
+    this.sessionIndex = sessionIndex;
   }
 
   GetSessionName() {
@@ -53,14 +56,22 @@ export class Session {
     return this.lengthLaps;
   }
 
+  GetSessionIndex() {
+    return this.sessionIndex;
+  }
+
   GetStartTime() {
     return this.startTime;
   }
 
   GetCars() {
+    const standings: Record<string | number, number> = {};
+
     const res = this.cars
       .GetCars()
-      .sort(getSortFunction(SessionType.PostionBased))
+      .sort(getSortFunction(SessionType.PostionBased));
+    this.cars
+      .GetCars()
       .map((entry, i, array) => ({
         pos: i + 1,
         gap:
