@@ -3,7 +3,7 @@ import { CarCollection } from './carcollection';
 import { Car } from './car';
 import { Entry } from './entry';
 import { CarState } from './enumerations/carstate';
-import kleur = require('kleur');
+
 import { sortTrackPosition } from '../functions/standingssort';
 import { calculateDistanceTo } from '../functions/calculateTimeTo';
 import { Session } from './session';
@@ -64,9 +64,7 @@ export class TrackMediator {
               carInFront.car.GetDistanceOnLap() - 5;
             entry.car.carPhysics.velocity = carInFront.car.carPhysics.velocity;
             console.log(
-              kleur.green(
-                `${entry.entryNumber} getting held up by ${carInFront.entryNumber}!`
-              )
+              `${entry.entryNumber} getting held up by ${carInFront.entryNumber}!`
             );
           }
         }

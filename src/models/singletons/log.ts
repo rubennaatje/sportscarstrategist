@@ -32,7 +32,7 @@ export class Log {
    * executed on its instance.
    */
   public AddEvent(test: string) {
-    this.strings.push(test);
+    // this.strings.push(test);
     console.log('i do be loggin tho');
   }
 

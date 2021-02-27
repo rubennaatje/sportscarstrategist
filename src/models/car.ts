@@ -203,7 +203,7 @@ export class Car {
   }
 
   GetLaptimes() {
-    let res = [];
+    let res: number[] = [];
 
     this.GetLapsAsArray().forEach((lap) => {
       res.push(lap.laptimeS);

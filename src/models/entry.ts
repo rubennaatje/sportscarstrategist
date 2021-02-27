@@ -8,7 +8,6 @@ import { GarageOut } from './end-tasks/end-garage-pitbox';
 import { PitboxOut } from './end-tasks/pitbox-pitlane';
 import { SessionFacts } from './interfaces/sessionfacts';
 import { GarageIn } from './end-tasks/garage-in';
-import kleur = require('kleur');
 
 export class Entry {
   category: string;

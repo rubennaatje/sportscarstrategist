@@ -54,7 +54,7 @@ export class TelemetryLog {
     this.telemetry.insert(item);
   }
 
-  public getTelemetry(carnumber, lap) {
+  public getTelemetry(carnumber: string | number, lap: number) {
     return this.telemetry.findOne({ carNumber: carnumber, lapNR: lap });
   }
 

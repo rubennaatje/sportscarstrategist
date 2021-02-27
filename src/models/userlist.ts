@@ -1,10 +1,10 @@
 import { User } from './user';
 
 export class UserList {
-  public users: User[];
+  public users: Record<string, User>;
 
   constructor() {
-    this.users = [];
+    this.users = {};
   }
 
   AddUserById(id: string) {

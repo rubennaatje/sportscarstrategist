@@ -1,3 +1,3 @@
 export interface Subscriber {
-  notify(event): void;
+  notify(event: any): void;
 }

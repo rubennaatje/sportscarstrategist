@@ -1,6 +1,6 @@
 import { Car } from './models/car';
 import { Driver } from './models/driver';
-import { CARS } from './tempCars';
+import { CARS } from '../tempCars';
 import { Game } from './game';
 import { Entry } from './models/entry';
 import { CarCollection } from './models/carcollection';
@@ -8,7 +8,7 @@ import { Session } from './models/session';
 import { SessionType } from './models/enumerations/sessiontype';
 import { Track } from './models/track';
 import { TrackMediator } from './models/trackmediator';
-import { track as trackk } from './track';
+import { track as trackk } from '../track';
 
 var app = require('express')();
 var http = require('http').Server(app);

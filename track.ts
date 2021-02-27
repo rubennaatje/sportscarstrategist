@@ -1,5 +1,3 @@
-import { Track } from './models/track';
-
 export const track = {
   length: 1234,
   graphics: {
