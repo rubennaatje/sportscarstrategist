@@ -22,7 +22,7 @@ export class TelemetryLog {
       autoloadCallback: () => {
         this.databaseInitialize();
       },
-      autosave: true,
+      autosave: false,
       autosaveInterval: 4000,
     });
   }
