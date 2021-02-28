@@ -3,7 +3,7 @@ import { SessionType } from '../models/enumerations/sessiontype';
 import { sendData } from '../models/interfaces/sendData';
 
 export const sortTrackPositionWithLaps = (a: Entry, b: Entry) => {
-  const [carA, carB, equal] = [1, -1, 0];
+  const [carA, carB, equal] = [-1, 1, 0];
 
   if (a.car.lapIndex < b.car.lapIndex) {
     return carB;

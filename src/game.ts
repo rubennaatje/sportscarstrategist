@@ -7,6 +7,7 @@ import { Chat } from './models/chat/chat';
 import { CarState } from './models/enumerations/carstate';
 import { TelemetryLog } from './models/singletons/TelemetryLog';
 import { Log } from './models/singletons/log';
+import { GameLoop } from './functions/gameloop';
 
 export class Game {
   private io: SocketIO.Server;
@@ -17,6 +18,7 @@ export class Game {
   private users: UserList;
   private chat: Chat;
   cars: CarCollection;
+  delta: number = 0;
   constructor(
     io: SocketIO.Server,
     cars: CarCollection,
@@ -25,13 +27,14 @@ export class Game {
   ) {
     this.io = io;
     this.listen();
-    this.update();
+
     this.sessions = [];
     this.sessioni = sessioni;
     this.users = new UserList();
     this.cars = cars;
     this.track = track;
     this.chat = new Chat();
+    GameLoop((delta) => this.update(delta));
   }
 
   public AddSession(session: Session) {
@@ -57,6 +60,7 @@ export class Game {
         this.users.GetUser(socket.id).username = data.username;
         // User can now receive updates
         socket.join('game');
+        console.log('joined!');
         socket.join(data.entryNumber);
         // this once, send info that won't change.
         const staticJson = {
@@ -118,35 +122,28 @@ export class Game {
         this.users.RemoveUser(socket.id);
       });
     });
+  }
 
-    const interval = setInterval(() => {
-      console.timeEnd('updateCars');
-      console.time('updateCars');
+  private update(delta: number): void {
+    if (this.delta >= 0.249) {
+      console.timeEnd('teamUpdate');
+      console.time('teamUpdate');
       const dataToSend = this.LiveSession().GetCars();
-      // console.log(kleur.bgGreen(this.json_filesize(dataToSend)));
       this.io.in('game').emit('updateCars', dataToSend);
-      this.track.getStandings();
-      const memUsage = process.memoryUsage();
-      console.log({ left: (memUsage.rss / (1024 * 1024)).toFixed(2) });
-    }, 250);
 
-    const telemetryInterval = setInterval(() => {
       this.cars.handle((entry: Entry) => {
         if (entry.state === CarState.ON_TRACK) {
           entry.RunTelemetry();
         }
       });
-      TelemetryLog.getInstance().getUpdate();
-    }, 250);
-  }
+      this.delta = 0;
+    }
+    this.delta = this.delta + delta;
 
-  private update(): void {
-    this.looper = setInterval(() => {
-      if (this.LiveSession() != null) {
-        this.LiveSession().handle();
-      }
-      this.track.handle();
-    }, 4);
+    if (this.LiveSession() != null) {
+      this.LiveSession().handle();
+    }
+    this.track.handle();
   }
 
   private json_filesize(value: {}) {
