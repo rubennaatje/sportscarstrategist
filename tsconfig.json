@@ -66,5 +66,9 @@
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
     "outDir": "dist"
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "paths": {
+    "@new_physics/*": ["src/new_physics/*"],
+    "@types": ["src/types/types"]
+  }
 }

@@ -8,12 +8,12 @@ import { Session } from './models/session';
 import { SessionType } from './models/enumerations/sessiontype';
 import { Track } from './models/track';
 import { TrackMediator } from './models/trackmediator';
-import { track as trackk } from '../track';
+import { track as trackk } from '../lemans';
 
 var app = require('express')();
 var http = require('http').Server(app);
 var io: SocketIO.Server = require('socket.io')(http);
-let track = new Track(7001);
+let track = new Track(13626);
 track.corners = trackk.corners;
 track.graphics = trackk.graphics;
 track.information = trackk.information;

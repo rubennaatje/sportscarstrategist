@@ -125,11 +125,13 @@ export class Game {
   }
 
   private update(delta: number): void {
-    if (this.delta >= 0.249) {
+    if (this.delta >= 0.496) {
       console.timeEnd('teamUpdate');
       console.time('teamUpdate');
       const dataToSend = this.LiveSession().GetCars();
-      this.io.in('game').emit('updateCars', dataToSend);
+      this.io
+        .in('game')
+        .emit('updateCars', { data: dataToSend, delta: this.delta * 1000 });
 
       this.cars.handle((entry: Entry) => {
         if (entry.state === CarState.ON_TRACK) {

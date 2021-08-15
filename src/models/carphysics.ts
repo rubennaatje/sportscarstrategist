@@ -106,7 +106,7 @@ export class CarPhysics {
     if (isCheck) {
       this.lastCheck = new Date();
     }
-    return dif * 3;
+    return dif;
   }
 
   CalculateAcceleration(chassis: IChassis): number {
