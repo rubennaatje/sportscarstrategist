@@ -18,6 +18,6 @@
     "@types/socket.io": "^2.1.4",
     "express": "^4.17.1",
     "kleur": "^3.0.3",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.5.0"
   }
 }
